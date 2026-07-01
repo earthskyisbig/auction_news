@@ -21,3 +21,6 @@ claude -p "오늘 부동산·경매 투자 뉴스 모아서 일일 브리핑 만
   >> "$LOG_FILE" 2>&1
 
 echo "===== $(date '+%Y-%m-%d %H:%M:%S') 종료 (exit=$?) =====" >> "$LOG_FILE"
+
+# 생성된 리포트를 git 에 자동 아카이빙(실패해도 무시)
+"$PROJECT_DIR/.claude/skills/realestate-news-daily/scripts/archive_report.sh" >> "$LOG_FILE" 2>&1 || true

@@ -15,3 +15,4 @@
 | 2026-07-01 | 평일 06:30 자동 실행 등록 (run-daily.sh + crontab) | scripts/run-daily.sh | "매일 아침 정기 수집" 요청 |
 | 2026-07-01 | 텔레그램 양방향 봇 추가 (수신 명령→claude 실행→회신, 리포트 전문 문서 발송) | scripts/telegram_bot.py + launchd | "텔레그램에서 뉴스 보고 지시" 요청 |
 | 2026-07-01 | 브라우저 렌더링 소스 추가 (국토부 보도자료·공지, 아실, 호갱노노) | scripts/render_page.py + categories-sources.md + 수집가 2명 | WebFetch 차단 사이트 스크래핑 요청 |
+| 2026-07-01 | GitHub 저장소 연결 + 리포트 매일 자동 아카이빙 | scripts/archive_report.sh + run-daily.sh + .gitignore | 리포트 git 아카이빙 요청 |

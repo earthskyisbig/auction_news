@@ -82,6 +82,8 @@ python3 .claude/skills/realestate-news-daily/scripts/deliver.py \
 
 발송 결과(채널별 ✅/❌)를 사용자에게 보고하고, 리포트 경로와 핵심 요약을 함께 제시한다.
 
+발송 후, 생성된 리포트를 git에 아카이빙한다(자동 실행 시 `run-daily.sh`가 `scripts/archive_report.sh`를 호출; 수동 실행 시에도 원하면 같은 스크립트 실행). reports/ 만 커밋하므로 비밀값은 포함되지 않는다.
+
 ---
 
 ## 에러 핸들링

@@ -4,8 +4,7 @@ delivery-config.json
 # 로그 (chat_id·메시지 내용 포함 가능)
 logs/
 
-# 생성 산출물 (뉴스 리포트·중간 파일)
-reports/
+# 중간 산출물 (reports/ 는 아카이빙을 위해 추적함)
 _workspace/
 _workspace_prev/
 
