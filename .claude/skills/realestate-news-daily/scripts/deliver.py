@@ -15,6 +15,7 @@
 import argparse
 import json
 import os
+import re
 import smtplib
 import ssl
 import subprocess
@@ -108,6 +109,56 @@ def _tg_send_document(token: str, chat_id: str, file_path: str, caption: str) ->
         return json.loads(resp.read()).get("ok", False)
 
 
+def _md_to_telegram_text(md: str) -> str:
+    """마크다운 리포트를 텔레그램 채팅에서 바로 읽히는 plain 텍스트로 변환.
+    표는 '• 셀 / 셀'로, 헤더/강조 기호는 제거, 구분선은 삭제한다(파싱 오류 방지 위해 parse_mode 미사용)."""
+    out = []
+    for raw in md.splitlines():
+        s = raw.strip()
+        if not s:
+            out.append("")
+            continue
+        # 표 구분선(|---|---|) 및 수평선(---, ***) 제거
+        if set(s) <= set("|-:= *_"):
+            continue
+        # 표 행 → 불릿
+        if s.startswith("|"):
+            cells = [c.strip() for c in s.strip("|").split("|") if c.strip()]
+            if cells:
+                out.append("• " + " / ".join(cells))
+            continue
+        s = re.sub(r"^#{1,6}\s*", "", s)   # 헤더 기호
+        s = re.sub(r"^>\s?", "", s)         # 인용
+        s = s.replace("**", "").replace("__", "").replace("`", "")  # 강조
+        out.append(s)
+    text = "\n".join(out)
+    return re.sub(r"\n{3,}", "\n\n", text).strip()
+
+
+def _chunk_lines(text: str, limit: int) -> list:
+    """줄 경계 기준으로 limit 이하 덩어리로 분할(문장 중간 절단 방지)."""
+    chunks, buf = [], ""
+    for line in text.split("\n"):
+        if len(buf) + len(line) + 1 > limit and buf:
+            chunks.append(buf.rstrip())
+            buf = ""
+        # 한 줄이 limit 초과하면 강제 분할
+        while len(line) > limit:
+            chunks.append(line[:limit])
+            line = line[limit:]
+        buf += line + "\n"
+    if buf.strip():
+        chunks.append(buf.rstrip())
+    return chunks or [""]
+
+
+def _tg_send_message(token: str, chat_id: str, text: str) -> bool:
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = urllib.parse.urlencode({"chat_id": chat_id, "text": text}).encode()
+    with urllib.request.urlopen(urllib.request.Request(url, data=data), timeout=30) as resp:
+        return json.loads(resp.read()).get("ok", False)
+
+
 def deliver_telegram(cfg: dict, summary: str, report_path: str) -> tuple[bool, str]:
     if not cfg.get("enabled", False):
         return True, "telegram: disabled (skip)"
@@ -115,21 +166,22 @@ def deliver_telegram(cfg: dict, summary: str, report_path: str) -> tuple[bool, s
     chat_id = env_or(cfg, "chat_id", "RE_NEWS_TG_CHATID")
     if not token or not chat_id:
         return False, "telegram: FAILED (bot_token/chat_id 미설정)"
-    # 1) 요약 메시지(4096자 제한)
-    text = f"📰 일일 부동산·경매 뉴스\n\n{summary}"[:4000]
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    data = urllib.parse.urlencode({"chat_id": chat_id, "text": text}).encode()
+    # 리포트 본문을 채팅에서 바로 읽히는 텍스트로 변환(없으면 요약)
+    if os.path.exists(report_path):
+        body = _md_to_telegram_text(open(report_path, encoding="utf-8").read())
+    else:
+        body = summary or "리포트 없음"
+    chunks = _chunk_lines(body, 3800)
+    n = len(chunks)
     try:
-        req = urllib.request.Request(url, data=data)
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            if not json.loads(resp.read()).get("ok", False):
-                return False, "telegram: FAILED (sendMessage ok=false)"
-        # 2) 리포트 전문 문서 첨부(있을 때)
-        if os.path.exists(report_path):
-            doc_ok = _tg_send_document(token, chat_id, report_path, "📄 리포트 전문")
-            if not doc_ok:
-                return False, "telegram: 요약은 보냄, 문서 전송 실패"
-        return True, "telegram: sent (요약 + 리포트 문서)"
+        for i, ch in enumerate(chunks, 1):
+            header = f"📰 부동산·경매 브리핑 ({i}/{n})\n\n" if n > 1 else "📰 부동산·경매 브리핑\n\n"
+            if not _tg_send_message(token, chat_id, header + ch):
+                return False, f"telegram: FAILED ({i}/{n} 메시지 전송 실패)"
+        # 문서 첨부는 옵션(기본 꺼짐) — 채팅에서 바로 읽도록 본문을 이미 보냄
+        if cfg.get("send_document", False) and os.path.exists(report_path):
+            _tg_send_document(token, chat_id, report_path, "📄 리포트 전문(.md)")
+        return True, f"telegram: sent (본문 {n}개 메시지" + (" + 문서)" if cfg.get("send_document", False) else ")")
     except Exception as e:
         return False, f"telegram: FAILED ({e})"
 

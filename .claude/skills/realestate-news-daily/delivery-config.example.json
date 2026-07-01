@@ -17,6 +17,8 @@
     "telegram": {
       "enabled": false,
       "_comment": "@BotFather 로 봇 생성 → bot_token. 봇에게 아무 메시지나 보낸 뒤 https://api.telegram.org/bot<TOKEN>/getUpdates 에서 chat_id 확인. 또는 환경변수 RE_NEWS_TG_TOKEN / RE_NEWS_TG_CHATID 사용.",
+      "_comment_send_document": "리포트 본문은 채팅에 바로 읽히는 텍스트로 분할 전송됩니다. .md 파일도 문서로 첨부하려면 send_document 를 true 로.",
+      "send_document": false,
       "bot_token": "",
       "chat_id": ""
     }
