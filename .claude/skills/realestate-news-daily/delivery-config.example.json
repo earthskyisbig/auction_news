@@ -1,0 +1,24 @@
+{
+  "_comment": "이 파일을 delivery-config.json 으로 복사한 뒤 값을 채우세요. 비밀값은 여기 직접 넣거나 환경변수로 주입할 수 있습니다. delivery-config.json 은 비밀값을 담으므로 외부에 공유하지 마세요.",
+  "channels": {
+    "notification": {
+      "enabled": true,
+      "_comment": "macOS 데스크톱 알림. 별도 설정 불필요."
+    },
+    "email": {
+      "enabled": false,
+      "_comment": "Gmail은 2단계 인증 후 '앱 비밀번호'를 발급받아 smtp_password에 넣으세요(일반 로그인 비번 아님). 또는 환경변수 RE_NEWS_SMTP_USER / RE_NEWS_SMTP_PASSWORD 사용.",
+      "smtp_host": "smtp.gmail.com",
+      "smtp_port": 587,
+      "smtp_user": "algo1744@gmail.com",
+      "smtp_password": "",
+      "to": "algo1744@gmail.com"
+    },
+    "telegram": {
+      "enabled": false,
+      "_comment": "@BotFather 로 봇 생성 → bot_token. 봇에게 아무 메시지나 보낸 뒤 https://api.telegram.org/bot<TOKEN>/getUpdates 에서 chat_id 확인. 또는 환경변수 RE_NEWS_TG_TOKEN / RE_NEWS_TG_CHATID 사용.",
+      "bot_token": "",
+      "chat_id": ""
+    }
+  }
+}
