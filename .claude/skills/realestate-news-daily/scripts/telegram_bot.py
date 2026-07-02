@@ -20,10 +20,26 @@ import urllib.request
 from pathlib import Path
 
 CFG = Path(__file__).parent.parent / "delivery-config.json"
+TOKEN_ENV = Path(__file__).parent.parent / "token.env"
 PROJECT_DIR = "/Users/leomyung/auction_news"
 CLAUDE = "/Users/leomyung/.local/bin/claude"
-CLAUDE_ENV = dict(os.environ, PATH="/Users/leomyung/.local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin")
 MAX_RUN_SEC = 1800  # claude 실행 최대 30분
+
+
+def _build_claude_env():
+    """무인 실행용 인증 토큰(token.env: CLAUDE_CODE_OAUTH_TOKEN=...)을 로드해 subprocess 환경에 주입."""
+    env = dict(os.environ, PATH="/Users/leomyung/.local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin")
+    if TOKEN_ENV.exists():
+        for line in TOKEN_ENV.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            env[k.strip()] = v.strip().strip('"').strip("'")
+    return env
+
+
+CLAUDE_ENV = _build_claude_env()
 
 
 def log(msg):

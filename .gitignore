@@ -1,6 +1,10 @@
 # 비밀값 (이메일 비번/텔레그램 토큰·chat_id)
 delivery-config.json
 
+# Claude 무인 실행 인증 토큰
+token.env
+*.env
+
 # 로그 (chat_id·메시지 내용 포함 가능)
 logs/
 

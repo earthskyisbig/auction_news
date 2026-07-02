@@ -11,6 +11,12 @@ LOG_FILE="$LOG_DIR/daily_$(date +%Y%m%d).log"
 
 cd "$PROJECT_DIR" || exit 1
 
+# 무인 실행용 Claude 인증 토큰 로드(키체인 접근 불가한 cron 환경 대응)
+ENV_FILE="$PROJECT_DIR/.claude/skills/realestate-news-daily/token.env"
+if [ -f "$ENV_FILE" ]; then
+    set -a; . "$ENV_FILE"; set +a
+fi
+
 echo "===== $(date '+%Y-%m-%d %H:%M:%S') 시작 =====" >> "$LOG_FILE"
 
 # headless 실행. .claude/ 의 스킬/에이전트를 자동 인식한다.
