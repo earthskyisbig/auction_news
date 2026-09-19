@@ -159,7 +159,7 @@ def _tg_send_message(token: str, chat_id: str, text: str) -> bool:
         return json.loads(resp.read()).get("ok", False)
 
 
-def deliver_telegram(cfg: dict, summary: str, report_path: str) -> tuple[bool, str]:
+def deliver_telegram(cfg: dict, summary: str, report_path: str, header_title: str = "📰 부동산·경매 브리핑") -> tuple[bool, str]:
     if not cfg.get("enabled", False):
         return True, "telegram: disabled (skip)"
     token = env_or(cfg, "bot_token", "RE_NEWS_TG_TOKEN")
@@ -175,7 +175,7 @@ def deliver_telegram(cfg: dict, summary: str, report_path: str) -> tuple[bool, s
     n = len(chunks)
     try:
         for i, ch in enumerate(chunks, 1):
-            header = f"📰 부동산·경매 브리핑 ({i}/{n})\n\n" if n > 1 else "📰 부동산·경매 브리핑\n\n"
+            header = f"{header_title} ({i}/{n})\n\n" if n > 1 else f"{header_title}\n\n"
             if not _tg_send_message(token, chat_id, header + ch):
                 return False, f"telegram: FAILED ({i}/{n} 메시지 전송 실패)"
         # 문서 첨부는 옵션(기본 꺼짐) — 채팅에서 바로 읽도록 본문을 이미 보냄
@@ -191,6 +191,8 @@ def main() -> int:
     ap.add_argument("--report", required=True)
     ap.add_argument("--summary", required=True)
     ap.add_argument("--config", default=str(Path(__file__).parent.parent / "delivery-config.json"))
+    ap.add_argument("--title", default="📰 일일 부동산·경매 투자 브리핑", help="알림/이메일/텔레그램 제목")
+    ap.add_argument("--attach", default="", help="텔레그램에 추가로 첨부할 문서 파일(전문 등)")
     args = ap.parse_args()
 
     report_path = Path(args.report)
@@ -200,14 +202,22 @@ def main() -> int:
 
     cfg = load_config(Path(args.config))
     channels = cfg.get("channels", {})
-    title = "📰 일일 부동산·경매 투자 브리핑"
+    title = args.title
 
     results = []
     # file은 이미 저장된 리포트 경로를 알려주는 것으로 갈음
     results.append((True, f"file: {report_path}"))
     results.append(deliver_notification(channels.get("notification", {"enabled": True}), title, summary))
     results.append(deliver_email(channels.get("email", {}), title, summary, report_md))
-    results.append(deliver_telegram(channels.get("telegram", {}), summary, str(report_path)))
+    results.append(deliver_telegram(channels.get("telegram", {}), summary, str(report_path), title))
+    if args.attach and os.path.exists(args.attach) and channels.get("telegram", {}).get("enabled"):
+        tg = channels["telegram"]
+        try:
+            ok = _tg_send_document(env_or(tg, "bot_token", "RE_NEWS_TG_TOKEN"), env_or(tg, "chat_id", "RE_NEWS_TG_CHATID"),
+                                   args.attach, "📄 전문(.md)")
+            results.append((ok, f"telegram attach: {'sent' if ok else 'FAILED'} ({os.path.basename(args.attach)})"))
+        except Exception as e:
+            results.append((False, f"telegram attach: FAILED ({e})"))
 
     all_ok = True
     for ok, msg in results:
