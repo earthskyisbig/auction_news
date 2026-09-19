@@ -21,6 +21,7 @@ cd "$PROJECT_DIR" || exit 1
 echo "===== $(date '+%F %T') 시작 (days=$DAYS) =====" >> "$LOG"
 python3 "$S/collect_smc.py" --days "$DAYS" >> "$LOG" 2>&1
 python3 "$S/collect_assembly.py" --days "$DAYS" >> "$LOG" 2>&1
+python3 "$S/collect_seoul_committees.py" --days "$DAYS" >> "$LOG" 2>&1
 python3 "$S/build_report.py" --date "$TODAY" >> "$LOG" 2>&1
 
 # 신규 회의록이 없으면 발송 생략

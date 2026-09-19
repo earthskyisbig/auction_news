@@ -1,6 +1,6 @@
 ---
 name: council-minutes-watch
-description: 서울시의회 회의록(ms.smc.seoul.kr)과 국회 회의록(열린국회정보·record.assembly.go.kr)에서 부동산·정비사업·주택정책 관련 발언을 정기 수집해 브리핑으로 만들고 텔레그램으로 발송한다. "의회 회의록 브리핑", "시의회/국회에서 재개발 얘기 나온 것", "회의록 감시 다시 실행", "지난주 의회 부동산 발언 정리", "회의록 키워드 추가" 같은 요청이면 이 스킬을 쓴다. 뉴스 브리핑은 realestate-news-daily.
+description: 서울시의회 회의록(ms.smc.seoul.kr)·국회 회의록(열린국회정보·record.assembly.go.kr)·서울시 도시계획위원회 등 도시건축위원회 심의결과(commission.eseoul.go.kr)에서 부동산·정비사업·주택정책 관련 발언을 정기 수집해 브리핑으로 만들고 텔레그램으로 발송한다. "의회 회의록 브리핑", "시의회/국회에서 재개발 얘기 나온 것", "도시계획위원회 심의결과", "회의록 감시 다시 실행", "지난주 의회 부동산 발언 정리", "회의록 키워드 추가" 같은 요청이면 이 스킬을 쓴다. 뉴스 브리핑은 realestate-news-daily.
 ---
 
 # council-minutes-watch — 의회 회의록 부동산 감시
@@ -13,6 +13,7 @@ description: 서울시의회 회의록(ms.smc.seoul.kr)과 국회 회의록(열�
 |---|---|---|---|
 | 1 | `collect_smc.py --days N` | Playwright(헤드리스)로 단순검색 폼에 키워드 18개 순회, 신규 회의록 본문 수집·발언 추출 | `_workspace/council/smc_<날짜>.json` |
 | 2 | `collect_assembly.py --days N` | 열린국회정보 Open API(`ASSEMBLY_API_KEY`, `~/.env`) 로 위원회·본회의 목록 → 감시 위원회/안건 키워드 선별 → PDF→`pdftotext -raw` → 발언 추출. 키 없으면 포털 시트 엔드포인트로 대체 | `_workspace/council/assembly_<날짜>.json` |
+| 2b | `collect_seoul_committees.py --days N` | 서울시 도시건축위원회 시스템(commission.eseoul.go.kr) POST 2회로 도시계획위·도시건축공동위·도시재정비위·건축위(키워드 안건만)·정비사업통합심의위·소규모주택정비·공공주택통합심의 회차별 안건·심의결과(원안/수정/조건부가결·보류) 수집 | `_workspace/council/seoulcmt_<날짜>.json` |
 | 3 | `build_report.py [--summary-file]` | 규칙 기반 마크다운 전문 + 텔레그램 다이제스트 + 알림 요약 | `reports/council/<날짜>-council.md`, `_workspace/council/digest_<날짜>.md` |
 | 4 | (LLM) 아래 "요약 작성" 지침 | 전문을 읽고 핵심 요약 작성 | `_workspace/council/llm_summary_<날짜>.md` |
 | 5 | `../realestate-news-daily/scripts/deliver.py --report digest --attach 전문 --title ...` | 텔레그램 본문 + 전문 .md 첨부 | 발송 |

@@ -20,3 +20,4 @@
 | 2026-07-03 | 무인 실행 인증 토큰 도입(cron 키체인 접근 불가 해결) | token.env(gitignore) + run-daily.sh + telegram_bot.py | 06:30 cron이 "Not logged in"으로 실패 |
 | 2026-09-19 | 연예인 부동산 거래 지도(매입·매도·경매·매물 89건, 선행지표 섹션) 생성 + 데이터·빌드 스크립트 보관 | reports/celeb-realestate-map.html, reports/celeb-realestate-data.json, scripts/build_celeb_map.py, scripts/celeb_data.py | "연예인 매입 물건을 선행지표로 지도에 표시" 요청 |
 | 2026-09-19 | 의회 회의록 감시 스킬 추가(서울시의회 Playwright 검색 + 국회 열린국회정보 API/PDF → 발언 추출 → LLM 요약 → 텔레그램) + 평일 07:30 cron | .claude/skills/council-minutes-watch/, deliver.py(--title/--attach), reports/council/ | "시의회·국회 회의록 부동산 관련 정기 검색" 요청 |
+| 2026-09-19 | 서울시 도시계획위원회 등 7개 위원회 심의결과 수집 단계 추가(commission.eseoul.go.kr) | council-minutes-watch/scripts/collect_seoul_committees.py, build_report.py, run-council.sh | "서울시 도시계획위원회 등도 추가 검색" 요청 |

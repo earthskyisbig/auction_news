@@ -16,14 +16,24 @@ from common import REPORT_DIR, WORK_DIR
 
 def load(day):
     items = []
-    for name in ("smc", "assembly"):
+    for name in ("smc", "assembly", "seoulcmt"):
         p = WORK_DIR / f"{name}_{day}.json"
         if p.exists():
             items += json.loads(p.read_text(encoding="utf-8"))
     return items
 
 
+def fmt_cmt(it):
+    lines = [f"### {it['committee']} · {it['date']} — 가결 {it['n_pass']} / 보류·부결 {it['n_hold']}"]
+    for g in it["agenda"]:
+        lines.append(f"- {g['name']} — **{g['result'] or '-'}**" + (f" ({g['kind']})" if g['kind'] and g['kind'] != '심의' else ""))
+    lines.append(f"- 출처: {it['url']}")
+    return "\n".join(lines)
+
+
 def fmt_item(it):
+    if it["source"] == "서울시 위원회":
+        return fmt_cmt(it)
     lines = [f"### {it['source']} · {it['meeting']} · {it['date']}",
              f"- 회의: {it['title']}",
              f"- 키워드: {', '.join(it['tags'][:6]) or '-'}"]
@@ -51,14 +61,15 @@ def main():
     items.sort(key=lambda x: (x["source"] != "서울시의회", x["date"]), reverse=False)
     smc = [i for i in items if i["source"] == "서울시의회"]
     asm = [i for i in items if i["source"] == "국회"]
+    cmt = [i for i in items if i["source"] == "서울시 위원회"]
 
     tagc = Counter(t for i in items for t in i["tags"][:5])
-    spk = Counter(h["speaker"] for i in items for h in i["hits"] if not h["speaker"].startswith("("))
+    spk = Counter(h["speaker"] for i in items for h in i.get("hits", []) if not h["speaker"].startswith("("))
     top_tags = ", ".join(f"{k}({v})" for k, v in tagc.most_common(8))
     top_spk = ", ".join(f"{k}({v})" for k, v in spk.most_common(8))
 
     out = [f"# 의회 회의록 부동산 브리핑 — {a.date}", ""]
-    out.append(f"신규 회의록 {len(items)}건 (서울시의회 {len(smc)} · 국회 {len(asm)}). 키워드 상위: {top_tags or '-'}")
+    out.append(f"신규 {len(items)}건 (서울시의회 회의록 {len(smc)} · 국회 회의록 {len(asm)} · 서울시 위원회 심의 {len(cmt)}회차). 키워드 상위: {top_tags or '-'}")
     if top_spk:
         out.append(f"발언 많은 인물: {top_spk}")
     out.append("")
@@ -72,18 +83,24 @@ def main():
         out += ["## 서울시의회", ""] + [fmt_item(i) + "\n" for i in smc]
     if asm:
         out += ["## 국회", ""] + [fmt_item(i) + "\n" for i in asm]
-    out += ["---", "출처: 서울특별시의회 회의록시스템(ms.smc.seoul.kr), 열린국회정보·국회회의록(record.assembly.go.kr). "
+    if cmt:
+        out += ["## 서울시 도시·건축 위원회 심의결과", ""] + [fmt_item(i) + "\n" for i in cmt]
+    out += ["---", "출처: 서울특별시의회 회의록시스템(ms.smc.seoul.kr), 열린국회정보·국회회의록(record.assembly.go.kr), 서울시 도시건축위원회 시스템(commission.eseoul.go.kr). "
             "발췌는 키워드 주변 발언이며 전체 맥락은 원문 링크에서 확인.",]
     rp = REPORT_DIR / f"{a.date}-council.md"
     rp.write_text("\n".join(out), encoding="utf-8")
 
     # 텔레그램용 다이제스트(회의당 3줄) — 전문은 문서로 첨부
-    dg = [f"신규 회의록 {len(items)}건 (서울시의회 {len(smc)} · 국회 {len(asm)})", f"키워드 상위: {top_tags or '-'}", ""]
+    dg = [f"신규 {len(items)}건 (시의회 {len(smc)} · 국회 {len(asm)} · 서울시 위원회 {len(cmt)}회차)", f"키워드 상위: {top_tags or '-'}", ""]
     if a.summary_file:
         p = __import__("pathlib").Path(a.summary_file)
         if p.exists() and p.read_text(encoding="utf-8").strip():
             dg += ["[핵심 요약]", p.read_text(encoding="utf-8").strip(), ""]
     for i in items:
+        if i["source"] == "서울시 위원회":
+            dg.append(f"■ {i['committee']} {i['date']} — " + " / ".join(f"{g['name'][:40]}({g['result']})" for g in i['agenda'][:5]))
+            dg.append(f"  {i['url']}")
+            continue
         best = i["hits"][0] if i["hits"] else None
         dg.append(f"■ {i['source']} {i['meeting']} {i['date']} — {', '.join(i['tags'][:3])}")
         if best:
@@ -95,7 +112,7 @@ def main():
     # 알림용 요약(짧게)
     s = [f"의회 회의록 부동산 브리핑 {a.date}: 신규 {len(items)}건 (서울시의회 {len(smc)}, 국회 {len(asm)})"]
     for i in items[:6]:
-        s.append(f"- {i['source']} {i['meeting']} {i['date']}: {', '.join(i['tags'][:3])}")
+        s.append(f"- {i['source']} {i.get('meeting') or i.get('committee')} {i['date']}: {', '.join(i['tags'][:3])}")
     sp = WORK_DIR / f"summary_{a.date}.txt"
     sp.write_text("\n".join(s), encoding="utf-8")
     print(str(rp))
