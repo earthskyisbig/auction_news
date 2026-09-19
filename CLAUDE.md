@@ -18,3 +18,4 @@
 | 2026-07-01 | GitHub 저장소 연결 + 리포트 매일 자동 아카이빙 | scripts/archive_report.sh + run-daily.sh + .gitignore | 리포트 git 아카이빙 요청 |
 | 2026-07-02 | 텔레그램: 리포트를 채팅 본문 텍스트로 분할 전송(문서 첨부 옵션화) | scripts/deliver.py | ".md 대신 채팅에서 직접 보기" 요청 |
 | 2026-07-03 | 무인 실행 인증 토큰 도입(cron 키체인 접근 불가 해결) | token.env(gitignore) + run-daily.sh + telegram_bot.py | 06:30 cron이 "Not logged in"으로 실패 |
+| 2026-09-19 | 연예인 부동산 거래 지도(매입·매도·경매·매물 89건, 선행지표 섹션) 생성 + 데이터·빌드 스크립트 보관 | reports/celeb-realestate-map.html, reports/celeb-realestate-data.json, scripts/build_celeb_map.py, scripts/celeb_data.py | "연예인 매입 물건을 선행지표로 지도에 표시" 요청 |
