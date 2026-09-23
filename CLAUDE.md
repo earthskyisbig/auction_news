@@ -21,3 +21,6 @@
 | 2026-09-19 | 연예인 부동산 거래 지도(매입·매도·경매·매물 89건, 선행지표 섹션) 생성 + 데이터·빌드 스크립트 보관 | reports/celeb-realestate-map.html, reports/celeb-realestate-data.json, scripts/build_celeb_map.py, scripts/celeb_data.py | "연예인 매입 물건을 선행지표로 지도에 표시" 요청 |
 | 2026-09-19 | 의회 회의록 감시 스킬 추가(서울시의회 Playwright 검색 + 국회 열린국회정보 API/PDF → 발언 추출 → LLM 요약 → 텔레그램) + 평일 07:30 cron | .claude/skills/council-minutes-watch/, deliver.py(--title/--attach), reports/council/ | "시의회·국회 회의록 부동산 관련 정기 검색" 요청 |
 | 2026-09-19 | 서울시 도시계획위원회 등 7개 위원회 심의결과 수집 단계 추가(commission.eseoul.go.kr) | council-minutes-watch/scripts/collect_seoul_committees.py, build_report.py, run-council.sh | "서울시 도시계획위원회 등도 추가 검색" 요청 |
+| 2026-09-23 | 주간 리포트 라인 추가: Jev(TypeSafe System One) 판독으로 기사 선별·등급화 → 리포트 작성 → doc-eval `news` 루브릭 품질 검사. 첫 회차(2026-09-23) 후보 19건→채택 11건+리더 복원 2건, 품질 88.0 무플래그 | reports/weekly/, scripts/news_jev.py, scripts/rubrics/news.json | 일일 브리핑과 별개로 주 1회 선별 근거가 남는 리포트가 필요 |
+| 2026-09-23 | 교훈: Jev 영향도는 전국 파급 기준이라 국지 뉴스(노원 +1.68%, 재건축 추진위)가 컷오프 미달로 탈락한다. 섹션 정원으로도 못 살리면 리더가 복원하고 리포트에 명시한다. 판독기는 선별 보조이지 결정권자가 아니다 | reports/weekly/README.md | 첫 실전 운영 |
+

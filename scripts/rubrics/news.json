@@ -1,0 +1,132 @@
+{
+ "name": "news",
+ "description": "주간 부동산 뉴스 리포트 — budongsan-news 스킬 산출물용 (기간 규율·출처 등급·투자 시사점 기준)",
+ "state_notes": "A weekly Korean real-estate news briefing covering policy/regulation, market indicators, interest rates, regional news, and new-apartment subscriptions. Its reader is an investor who must decide what changed this week and what to do about it. Government and public-institution data (국토부, 금융위, 한국은행, 한국부동산원, KB부동산, 청약홈) is the strongest source; major press is secondary; blogs, aggregators, and unnamed 'market opinion' are weakest. A briefing is only useful if it is scoped to one stated week and separates what actually happened from what is merely forecast.",
+ "dimensions": {
+  "accuracy": {
+   "label": "출처·사실 규율",
+   "weight": 0.35,
+   "instructions": "How well does `document.text` tie each figure and claim to a named source with its reference date, and how clearly does it separate decided facts from forecasts? Prefer government and public-institution data over press, and press over blogs. Judge only what the text shows; do not verify against outside knowledge.",
+   "criteria": [
+    {
+     "what": "Rates, price changes, or policy claims appear as bare numbers with no source, or forecasts are written as if they had already happened.",
+     "examples": [
+      "'서울 아파트값 0.2% 상승' — 기관·기준일 없음",
+      "'DSR이 강화된다' — 시행 여부·시점 불명"
+     ]
+    },
+    {
+     "what": "Some items name a source, but most figures are unattributed, or the sources are mostly blogs, aggregators, and unnamed officials."
+    },
+    {
+     "what": "Most items name a press outlet and a date, but public-institution data is quoted second-hand where the primary release exists, or a few forecasts sit unlabelled among the facts.",
+     "examples": [
+      "한국부동산원 통계를 언론 기사만 인용하고 보도자료 기준일은 빠짐"
+     ]
+    },
+    {
+     "what": "Key figures name the issuing body and reference period, and forecasts are marked as 전망·예상; a few minor items remain unattributed."
+    },
+    {
+     "what": "Every material figure names its issuing body, reference date, and unit; decided measures state their effective date; forecasts and analyst views are labelled as such and attributed to who said them.",
+     "examples": [
+      "'한국부동산원 주간동향(9.14 기준) 서울 매매 +0.16%'",
+      "'금융위 발표, 2027년 1월 시행'"
+     ]
+    }
+   ]
+  },
+  "clarity": {
+   "label": "구조·가독성",
+   "weight": 0.2,
+   "instructions": "How quickly can the reader see what changed this week from the structure of `document.text` — the stated week, a top summary, and consistently formatted category sections?",
+   "criteria": [
+    {
+     "what": "One undifferentiated stream of items; the covering week is not stated anywhere."
+    },
+    {
+     "what": "Sections exist but items are formatted inconsistently, or the summary just repeats the section headings."
+    },
+    {
+     "what": "The week is stated and categories are separated, but key numbers are buried in prose where a table would serve, or section lengths are wildly uneven without reason."
+    },
+    {
+     "what": "Stated week, a summary table of the week's state, and consistent per-item formatting (source, date, content); minor formatting drift."
+    },
+    {
+     "what": "The week is stated up front, a one-line verdict and a summary table let the reader stop there, indicators sit in tables, and every item follows the same shape."
+    }
+   ]
+  },
+  "completeness": {
+   "label": "커버리지·기간 규율",
+   "weight": 0.2,
+   "instructions": "Does `document.text` cover the categories a weekly briefing needs (policy, market indicators, rates, regional, supply/subscriptions) with items from the stated week, and does it say so when a category was quiet?",
+   "criteria": [
+    {
+     "what": "Only one or two categories appear, or items are visibly from other weeks or months with no period noted."
+    },
+    {
+     "what": "Several categories covered but one or more major ones are silently missing, or older background items are mixed in as if current."
+    },
+    {
+     "what": "All main categories appear, but some hold only a single thin item and nothing says whether that reflects a quiet week or a gap in collection."
+    },
+    {
+     "what": "All main categories covered with items from the stated week; quiet categories are explicitly marked as such."
+    },
+    {
+     "what": "Every category is covered from the stated week, quiet ones are marked '이번 주 주요 동향 없음', duplicate coverage of one event is consolidated, and any deliberately excluded item is noted."
+    }
+   ]
+  },
+  "actionability": {
+   "label": "투자 시사점",
+   "weight": 0.25,
+   "instructions": "Does `document.text` turn each item into what the reader should do or watch — effect on loan limits, price direction, timing, specific areas — rather than restating the headline?",
+   "criteria": [
+    {
+     "what": "Summaries only; no item says what it means for a buyer, seller, or borrower."
+    },
+    {
+     "what": "A few generic lines such as '시장에 영향이 예상된다' or '관심이 필요하다' that would fit any week."
+    },
+    {
+     "what": "Several items state a direction (긍정/부정) but not who is affected or by how much, and the week's items are never weighed against each other."
+    },
+    {
+     "what": "Most items state the concrete effect and who it hits; the briefing ends with a ranked view of what matters most this week."
+    },
+    {
+     "what": "Each item states the effect with its mechanism and magnitude (한도·금리·세율·일정이 얼마나 달라지는지), names the affected group or area, and the closing section ranks the week's items and states what to watch next week.",
+     "examples": [
+      "'위험가중치 20% 상향 → 은행 주담대 한도 축소, 1월 시행 전 실행 검토'",
+      "'다음 주 금통위 전까지 변동금리 갈아타기 보류'"
+     ]
+    }
+   ]
+  }
+ },
+ "flags": {
+  "unsourced_numbers": {
+   "label": "출처 없는 수치",
+   "instructions": "Does the text state prices, rates, percentages, or transaction counts without naming where they came from and as of when?"
+  },
+  "forecast_as_fact": {
+   "label": "전망을 사실처럼 서술",
+   "instructions": "Does the text present something still unsettled — 전망, 예상, 추진, 검토, 논의, 기대, an analyst's or official's projection — in the SAME voice as measures that have actually been decided, published, or measured, WITHOUT marking it? Answer no when unsettled items are consistently labelled (전망·예상·예정·미확정·가설·추정) or attributed to whoever forecast them, even if the text contains many such items — a weekly briefing is expected to look ahead. Judge whether the reader can tell the two apart, not how much forward-looking material there is."
+  },
+  "stale_items": {
+   "label": "기간 밖 기사 혼입",
+   "instructions": "Does the text include items dated outside the week it says it covers, without marking them as background?"
+  },
+  "blog_dependency": {
+   "label": "블로그·집계 사이트 의존",
+   "instructions": "Do blogs, content aggregators, or promotional posts serve as the main source for any category, where an official release or major press report exists?"
+  },
+  "no_next_week": {
+   "label": "다음 주 관전 포인트 없음",
+   "instructions": "Does the text end without saying what the reader should watch or decide in the coming week?"
+  }
+ }
+}
