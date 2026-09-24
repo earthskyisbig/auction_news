@@ -23,4 +23,5 @@
 | 2026-09-19 | 서울시 도시계획위원회 등 7개 위원회 심의결과 수집 단계 추가(commission.eseoul.go.kr) | council-minutes-watch/scripts/collect_seoul_committees.py, build_report.py, run-council.sh | "서울시 도시계획위원회 등도 추가 검색" 요청 |
 | 2026-09-23 | 주간 리포트 라인 추가: Jev(TypeSafe System One) 판독으로 기사 선별·등급화 → 리포트 작성 → doc-eval `news` 루브릭 품질 검사. 첫 회차(2026-09-23) 후보 19건→채택 11건+리더 복원 2건, 품질 88.0 무플래그 | reports/weekly/, scripts/news_jev.py, scripts/rubrics/news.json | 일일 브리핑과 별개로 주 1회 선별 근거가 남는 리포트가 필요 |
 | 2026-09-23 | 교훈: Jev 영향도는 전국 파급 기준이라 국지 뉴스(노원 +1.68%, 재건축 추진위)가 컷오프 미달로 탈락한다. 섹션 정원으로도 못 살리면 리더가 복원하고 리포트에 명시한다. 판독기는 선별 보조이지 결정권자가 아니다 | reports/weekly/README.md | 첫 실전 운영 |
+| 2026-09-23 | 주간 리포트 웹 브리핑 추가(algo-design 토큰, 칩 필터·우선순위 막대·두 기관 비교·판독 분포 막대). claude.ai 아티팩트로도 게시 | reports/weekly/2026-09-23-weekly-news.html | 마크다운만으로는 판독 결과가 한눈에 안 들어옴 |
 

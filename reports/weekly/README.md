@@ -31,6 +31,7 @@ cd ~/doc-eval && uv run doc-eval <리포트.md> -r news
 | 경로 | 내용 |
 |---|---|
 | `YYYY-MM-DD-weekly-news.md` | 주간 리포트 본문 |
+| `YYYY-MM-DD-weekly-news.html` | 같은 내용의 웹 브리핑 (algo-design 토큰: 크림 배경 + 오렌지/블루 액센트). 카테고리 칩 필터·우선순위 막대·두 기관 통계 비교 포함 |
 | `news-YYYY-MM-DD/candidates.json` | 수집 원본(판독 입력) |
 | `news-YYYY-MM-DD/jev_news.md` | 판독 결과 — 채택·제외 사유·영향도·방향 |
 | `news-YYYY-MM-DD/jev_news.json` | 판독 원자료(확률 분포·토큰 사용량 포함) |
@@ -47,3 +48,13 @@ cd ~/doc-eval && uv run doc-eval <리포트.md> -r news
 - **영향도 x.x/4** — 4에 가까울수록 시장 규칙 자체가 바뀌는 사안(기준금리·대출 총량·공급대책)
 - Jev는 본문에 적힌 것만 판단한다. **선별 근거이지 사실 검증이 아니다** — 채택 기사 수치는 원문 확인이 필요하다.
 - 영향도는 전국 파급을 보므로 국지 뉴스가 컷오프 아래로 떨어진다. 리더가 복원할 경우 리포트 본문에 그 사실을 명시한다.
+
+## 웹 브리핑
+
+`*-weekly-news.html`은 마크다운 리포트와 같은 내용을 읽기용으로 만든 단일 파일 페이지다.
+외부 의존은 Google Fonts(Poppins/Lora)뿐이고 나머지 CSS·JS는 인라인이라 그냥 열면 된다.
+디자인 토큰은 `~/.claude/skills/algo-design/assets/tokens.css`를 따른다.
+
+| 회차 | claude.ai 아티팩트 |
+|---|---|
+| 2026-09-23 | https://claude.ai/artifact/F6q2tvD9ndEns4ihS7b7Jr (비공개) |
