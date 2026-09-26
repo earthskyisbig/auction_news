@@ -24,6 +24,27 @@ LOG_FILE="$LOG_DIR/weekly_$(date +%Y%m%d).log"
 
 log(){ echo "$(date '+%Y-%m-%d %H:%M:%S') $*" >> "$LOG_FILE"; }
 
+# 푸시 실패는 로그에만 남으면 아무도 모른다 — 기존 텔레그램 발송 경로로 알린다.
+notify_push_failure(){
+    local ahead="$1"
+    local msg="$STAMP_DIR/.push-failure.md"
+    {
+        echo "# 주간 브리핑 푸시 실패"
+        echo
+        echo "- 시각: $(date '+%Y-%m-%d %H:%M:%S')"
+        echo "- 미푸시 커밋: ${ahead}건"
+        echo "- 원격: $(git remote get-url origin 2>/dev/null)"
+        echo
+        echo '리포트는 로컬에 정상 생성됐고 커밋도 됐다. 푸시만 실패했다.'
+        echo '확인: `cd ~/auction_news && git log origin/main..HEAD --oneline && git push`'
+    } > "$msg"
+    python3 "$PROJECT_DIR/.claude/skills/realestate-news-daily/scripts/deliver.py" \
+        --report "$msg" \
+        --summary "주간 브리핑 푸시 실패 — 미푸시 ${ahead}건" \
+        --title "⚠️ auction_news 푸시 실패" >> "$LOG_FILE" 2>&1 \
+        || log "알림 발송도 실패 (deliver.py)"
+}
+
 # --- 실행 조건 ---------------------------------------------------------------
 [ -f "$STAMP" ] && exit 0                      # 이번 주 이미 완료
 [ "$DOW" -lt 5 ] && exit 0                     # 금요일 전
@@ -78,7 +99,18 @@ if ls "$PROJECT_DIR"/reports/weekly/*-weekly-news.md >/dev/null 2>&1 && \
         log "미커밋 산출물 발견 — 안전망 커밋"
         git add reports/weekly >> "$LOG_FILE" 2>&1
         git commit -q -m "주간 부동산 브리핑: $TO (자동 아카이브)" >> "$LOG_FILE" 2>&1
-        git push -q origin main >> "$LOG_FILE" 2>&1 || log "푸시 실패 — 다음 실행에서 재시도"
+    fi
+
+    # 밀린 커밋을 푸시한다. 실패해도 산출물은 로컬에 남으므로 치명적이지는 않지만,
+    # 조용히 쌓이면 아무도 모른 채 원격 백업이 멈추므로 반드시 알린다(2026-09-25 실제 발생).
+    AHEAD="$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)"
+    if [ "$AHEAD" -gt 0 ]; then
+        if git push -q origin main >> "$LOG_FILE" 2>&1; then
+            log "푸시 완료 ($AHEAD건)"
+        else
+            log "푸시 실패 — 미푸시 $AHEAD건"
+            notify_push_failure "$AHEAD"
+        fi
     fi
 else
     log "산출물 없음 — 스탬프 미기록, 다음 실행일에 재시도"

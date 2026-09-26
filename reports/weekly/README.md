@@ -66,6 +66,12 @@ cd ~/doc-eval && uv run doc-eval <리포트.md> -r news
   실패한 주는 다음 날 다시 시도된다.
 - 락: `_workspace/weekly/.lock` — 06:30 일일 브리핑과 겹칠 때 중복 실행을 막는다(3시간 지나면 회수).
 - 로그: `logs/weekly_YYYYMMDD.log`
+- 푸시 인증: **deploy key**. cron은 GUI 키체인에 접근할 수 없어 https + osxkeychain 조합이 실패한다
+  (2026-09-25 실제로 커밋만 쌓이고 푸시가 조용히 멈췄다). 원격은 `git@github-auction-news:...` 별칭을 쓰고,
+  키는 `~/.ssh/auction_news_deploy` — **이 저장소에만** 통하므로 유출돼도 다른 저장소·계정은 안전하다.
+  ssh 별칭 정의는 `~/.ssh/config`. 되돌리려면
+  `git remote set-url origin https://github.com/earthskyisbig/auction_news.git`.
+- 푸시가 실패하면 텔레그램으로 알린다(`notify_push_failure`). 로그에만 남기면 아무도 모른다.
 - 실행 내용은 전역 스킬 `~/.claude/skills/budongsan-news/`의 Step 1~7이다. 스킬이 없으면 이 자동화도 돌지 않는다.
 
 수동으로 한 회차 돌리려면 스탬프를 지우고 스크립트를 부르거나, 대화에서 `/budongsan-news`를 쓴다.
