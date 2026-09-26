@@ -28,4 +28,5 @@
 | 2026-09-25 | 주간 브리핑 2회차(기간 9/24~9/25). 후보 16건 → Jev 채택 6건 + 리더 복원 3건, 품질 85.6 무플래그. 아티팩트 게시 생략, HTML까지만 | reports/weekly/2026-09-25-weekly-news.{md,html} | 사용자 지시(무인 실행, Step 1~7) |
 | 2026-09-25 | 교훈: 공휴일이 낀 주는 '직전 목요일~실행일' 2일 창으로 잡으면 금리·지역·경매 섹션이 구조적으로 0건이 된다. 리더가 기간 직전 자료를 복원하되 본문·HTML에 복원 표시를 단다. 다음부터 연휴 주는 --from을 한 주 앞으로 늘린다 | reports/weekly/README.md | 추석(9/25) 연휴와 판독 기간이 겹침 |
 | 2026-09-26 | 자동 푸시 인증을 deploy key(SSH)로 전환. 원격 `git@github-auction-news:...`(별칭), 키 `~/.ssh/auction_news_deploy`(ed25519, 이 저장소 전용). run-weekly.sh에 푸시 실패 텔레그램 알림 추가 | git remote, ~/.ssh/config, scripts/run-weekly.sh | cron이 GUI 키체인에 접근 못 해 9/25 첫 자동 실행의 푸시가 조용히 실패(커밋 3건 적체). 토큰 만료가 아니라 구조적 문제 |
+| 2026-09-26 | 스킬·CLI 백업 구조 정리: 전역 스킬 17개를 `claude-skills-private`(비공개) 저장소로 옮기고 `~/.claude/skills`는 심링크로 전환, `doc-eval`도 비공개 저장소화(커밋 0개였음). 이 저장소의 사본 2개(`scripts/news_jev.py`, `scripts/rubrics/news.json`) 제거 | scripts/, reports/weekly/README.md | 자동화가 의존하는 로직이 어디에도 백업되지 않아 맥 고장 시 소실. 사본은 원본과 갈라짐 |
 

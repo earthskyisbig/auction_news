@@ -36,11 +36,19 @@ cd ~/doc-eval && uv run doc-eval <리포트.md> -r news
 | `news-YYYY-MM-DD/jev_news.md` | 판독 결과 — 채택·제외 사유·영향도·방향 |
 | `news-YYYY-MM-DD/jev_news.json` | 판독 원자료(확률 분포·토큰 사용량 포함) |
 
-## 원본 위치
+## 의존하는 저장소
 
-`scripts/news_jev.py`와 `scripts/rubrics/news.json`은 **아카이브 사본**이다. 원본은
-`~/.claude/skills/budongsan-news/scripts/news_jev.py`, `~/doc-eval/rubrics/news.json`이며
-수정은 원본에서 한 뒤 여기로 복사한다.
+이 저장소는 산출물과 자동화 래퍼만 갖는다. 실행 로직은 다른 두 저장소에 있다.
+
+| 필요한 것 | 저장소 | 로컬 위치 |
+|---|---|---|
+| `budongsan-news` 스킬 (Step 1~7), `news_jev.py` | `earthskyisbig/claude-skills-private` | `~/claude-skills/` → `~/.claude/skills/` 심링크 |
+| `doc-eval` CLI, `news` 루브릭 | `earthskyisbig/doc-eval` | `~/doc-eval/` |
+| `TYPESAFE_API_KEY` | (저장소 없음) | `~/doc-eval/.env` |
+
+사본을 이 저장소에 복사해 두던 방식(`scripts/news_jev.py`, `scripts/rubrics/news.json`)은
+원본과 갈라지므로 2026-09-26에 제거했다. 새 맥에서는 저장소 3개를 클론하고
+`~/claude-skills/README.md`의 심링크 스니펫을 돌린 뒤 비밀값을 채우면 된다.
 
 ## 판독 결과 읽는 법
 
