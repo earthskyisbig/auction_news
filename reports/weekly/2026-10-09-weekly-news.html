@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10월 9일 부동산 브리핑 — 87주 신기록, 상승을 만든 건 강남이 아니었다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark:#141413; --light:#faf9f5; --light-gray:#e8e6dc; --mid-gray:#b0aea5;
+  --orange:#d97757; --blue:#6a9bcc; --green:#788c5d;
+  --mute:rgba(20,20,19,0.62); --on-dark-mute:rgba(250,249,245,0.6);
+  --line:rgba(20,20,19,0.1);
+  --heading:'Poppins', Arial, sans-serif;
+  --body:'Lora', Georgia, serif;
+  --label:'Poppins', Arial, sans-serif;
+  --maxw:1100px; --ease:cubic-bezier(.16,1,.3,1);
+}
+body{ margin:0; background:var(--light); color:var(--dark); font-family:var(--body); -webkit-font-smoothing:antialiased; }
+h1,h2,h3{ margin:0; font-family:var(--heading); font-weight:600; letter-spacing:-0.01em; text-wrap:balance; }
+a{ color:var(--orange); }
+::selection{ background:var(--orange); color:var(--light); }
+:focus-visible{ outline:2px solid var(--orange); outline-offset:3px; }
+.wrap{ max-width:var(--maxw); margin:0 auto; padding-inline:28px; }
+section{ padding-block:74px; }
+section.on-dark{ background:var(--dark); color:var(--light); }
+section.bg-soft{ background:var(--light-gray); }
+
+.eyebrow{ font-family:var(--label); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--mute); display:inline-flex; align-items:center; gap:0.5em; background:var(--light-gray); padding:6px 14px; border-radius:999px; }
+.eyebrow.on-dark{ background:rgba(250,249,245,0.08); color:var(--on-dark-mute); }
+.eyebrow::before{ content:''; width:6px; height:6px; background:var(--orange); border-radius:50%; display:inline-block; }
+
+.chip-group{ display:flex; flex-wrap:wrap; gap:6px; background:var(--light-gray); padding:6px; border-radius:12px; width:fit-content; max-width:100%; }
+.chip{ font-family:var(--label); font-size:0.84rem; font-weight:500; background:transparent; color:var(--mute);
+  border:none; border-radius:8px; padding:8px 16px; cursor:pointer; transition:all 0.25s ease; }
+.chip:hover{ color:var(--dark); }
+.chip.active{ background:var(--light); color:var(--orange); box-shadow:0 1px 4px rgba(20,20,19,0.12); }
+
+.card{ background:var(--light); border:1px solid var(--line); border-radius:16px; padding:22px 20px;
+  transition:transform 0.3s var(--ease), box-shadow 0.3s ease, border-color 0.3s ease; }
+.card:hover{ transform:translateY(-4px); box-shadow:0 16px 32px -16px rgba(20,20,19,0.18); border-color:rgba(217,119,87,0.35); }
+.card .name{ font-family:var(--heading); font-weight:600; font-size:1.05rem; margin-bottom:4px; line-height:1.4; }
+.card .tag{ font-family:var(--label); font-size:0.7rem; color:var(--mute); text-transform:uppercase; letter-spacing:0.04em; }
+
+.compare{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media (max-width:700px){ .compare{ grid-template-columns:1fr; } }
+.compare > div{ border-radius:22px; padding:34px 30px; background:var(--light); }
+.compare .muted{ border:1px solid var(--line); }
+.compare .emphasis{ border:2px solid var(--orange); }
+
+.pill{ font-family:var(--label); font-size:0.68rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+  padding:5px 11px; border-radius:999px; display:inline-block; }
+.pill.neutral{ background:var(--light-gray); color:var(--mute); }
+.pill.active{ background:var(--orange); color:var(--light); }
+
+.progress{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg,var(--orange),var(--blue)); z-index:100; transition:width 0.1s linear; }
+.blob{ position:absolute; border-radius:50%; filter:blur(50px); pointer-events:none; }
+@keyframes driftA{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(40px,30px) scale(1.12); } }
+@keyframes driftB{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-36px,24px) scale(1.08); } }
+@keyframes driftC{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(20px,-26px) scale(1.1); } }
+.reveal{ opacity:0; transform:translateY(20px); transition:opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.reveal.in-view{ opacity:1; transform:translateY(0); }
+
+/* ---------- hero ---------- */
+.hero{ position:relative; overflow:hidden; padding-block:96px 78px; }
+.hero .blob.a{ width:420px; height:420px; background:rgba(217,119,87,0.28); top:-140px; right:-60px; animation:driftA 17s ease-in-out infinite; }
+.hero .blob.b{ width:340px; height:340px; background:rgba(106,155,204,0.24); top:60px; right:180px; animation:driftB 20s ease-in-out infinite; }
+.hero .blob.c{ width:260px; height:260px; background:rgba(120,140,93,0.2); top:-40px; left:-80px; animation:driftC 15s ease-in-out infinite; }
+.hero .wrap{ position:relative; z-index:1; }
+.hero h1{ font-size:clamp(2.1rem, 5.2vw, 3.4rem); line-height:1.16; margin:20px 0 0; max-width:19ch; }
+.hero .lede{ font-size:1.12rem; line-height:1.75; color:var(--mute); max-width:62ch; margin:20px 0 0; font-style:italic; }
+.meta-row{ display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:30px; font-family:var(--label); font-size:0.8rem; color:var(--mute); }
+.meta-row b{ color:var(--dark); font-weight:600; }
+
+/* ---------- stat tiles ---------- */
+.stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:1px; background:var(--line);
+  border:1px solid var(--line); border-radius:18px; overflow:hidden; margin-top:44px; }
+.stat{ background:var(--light); padding:24px 22px; }
+.stat .k{ font-family:var(--label); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--mute); }
+.stat .v{ font-family:var(--heading); font-weight:600; font-size:1.92rem; letter-spacing:-0.02em; margin-top:10px;
+  font-variant-numeric:tabular-nums; line-height:1; }
+.stat .v.up{ color:var(--orange); }
+.stat .v.down{ color:var(--blue); }
+.stat .s{ font-size:0.84rem; color:var(--mute); margin-top:9px; line-height:1.55; }
+
+.sec-head{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:14px; margin-bottom:12px; }
+h2.t{ font-size:clamp(1.5rem,3.2vw,2.05rem); margin-top:16px; }
+.sub{ color:var(--mute); font-size:1rem; line-height:1.75; max-width:64ch; margin:14px 0 0; }
+section.on-dark .sub{ color:var(--on-dark-mute); }
+
+/* ---------- source compare ---------- */
+.srcnum{ font-family:var(--heading); font-weight:600; font-size:2.5rem; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; line-height:1; }
+.srcrow{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line); font-size:0.94rem; }
+.srcrow:last-child{ border-bottom:none; }
+.srcrow span:last-child{ font-family:var(--heading); font-weight:600; font-variant-numeric:tabular-nums; }
+.warn{ margin-top:22px; padding:16px 18px; border-left:3px solid var(--orange); background:rgba(217,119,87,0.07);
+  border-radius:0 10px 10px 0; font-size:0.92rem; line-height:1.7; color:var(--mute); }
+.warn b{ color:var(--dark); }
+
+/* ---------- pipeline (dark) ---------- */
+.flow{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin-top:38px; }
+.step{ border:1px solid rgba(250,249,245,0.16); border-radius:16px; padding:22px 20px; background:rgba(250,249,245,0.03); }
+.step .n{ font-family:var(--label); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); }
+.step .big{ font-family:var(--heading); font-weight:600; font-size:2.1rem; letter-spacing:-0.02em; margin-top:12px; line-height:1; font-variant-numeric:tabular-nums; }
+.step .d{ font-size:0.88rem; line-height:1.65; color:var(--on-dark-mute); margin-top:10px; }
+.bar{ display:flex; height:10px; border-radius:999px; overflow:hidden; margin-top:40px; border:1px solid rgba(250,249,245,0.18); }
+.bar i{ display:block; height:100%; }
+.legend{ display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:14px; font-family:var(--label); font-size:0.76rem; color:var(--on-dark-mute); }
+.legend i{ width:9px; height:9px; border-radius:2px; display:inline-block; margin-right:7px; }
+
+/* ---------- news list ---------- */
+.newsgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:16px; margin-top:26px; }
+.card .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:11px; }
+.impact{ font-family:var(--label); font-size:0.72rem; font-weight:600; color:var(--mute); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.dir{ font-family:var(--heading); font-weight:600; font-size:0.86rem; }
+.dir.up{ color:var(--orange); } .dir.down{ color:var(--blue); } .dir.flat{ color:var(--mid-gray); }
+.card .why{ font-size:0.9rem; line-height:1.68; color:var(--mute); margin-top:10px; }
+.card .src{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:14px; }
+.note{ font-family:var(--label); font-size:0.66rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--orange);
+  border:1px dashed rgba(217,119,87,0.5); border-radius:999px; padding:4px 10px; }
+.meter{ height:4px; border-radius:999px; background:var(--light-gray); overflow:hidden; margin-top:14px; }
+.meter i{ display:block; height:100%; background:var(--orange); }
+
+/* ---------- watchlist ---------- */
+.watch{ margin-top:30px; border-top:1px solid var(--line); }
+.wrow{ display:grid; grid-template-columns:118px 1fr; gap:6px 24px; padding:20px 0; border-bottom:1px solid var(--line); align-items:start; }
+@media (max-width:620px){ .wrow{ grid-template-columns:1fr; } }
+.wdate{ font-family:var(--label); font-size:0.78rem; font-weight:600; color:var(--orange); letter-spacing:0.04em; padding-top:2px; }
+.wtitle{ font-family:var(--heading); font-weight:600; font-size:1.02rem; line-height:1.45; }
+.wwhy{ font-size:0.92rem; line-height:1.7; color:var(--mute); margin-top:6px; }
+
+footer{ background:var(--light-gray); padding-block:48px; font-size:0.86rem; color:var(--mute); line-height:1.8; }
+footer b{ color:var(--dark); }
+footer code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:0.86em; background:rgba(20,20,19,0.06); padding:2px 6px; border-radius:5px; }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+
+<section class="hero">
+  <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+  <div class="wrap">
+    <span class="eyebrow">주간 브리핑 · 2026년 10월 8~9일</span>
+    <h1>87주 신기록을 다시 쓴 날, 상승을 만든 건 강남이 아니었다</h1>
+    <p class="lede">서울 아파트값은 87주 연속 상승에 상승폭까지 6주 만에 다시 벌어졌다. 그런데 그 상승을 만든 곳은 전세가 사라진 외곽이다. 기록은 강세로 읽히지만, 내용은 전세난에 밀린 매수다.</p>
+    <div class="meta-row">
+      <span>기준 기간 <b>2026년 10월 8일(목) ~ 10월 9일(금, 한글날)</b></span>
+      <span>후보 <b>21건</b> → Jev 채택 <b>8건</b> + 리더 복원 <b>11건</b></span>
+      <span>리포트 품질 <b>87.2</b> / 플래그 없음</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="k">서울 아파트 매매</div>
+        <div class="v up">+0.12%</div>
+        <div class="s">한국부동산원 10.05 조사(10/8 발표)<br><b>87주 연속 상승 · 6주 만에 상승폭 확대</b></div>
+      </div>
+      <div class="stat">
+        <div class="k">서대문구 매매 (서울 최고)</div>
+        <div class="v up">+0.36%</div>
+        <div class="s">강북 +0.35% · 금천 +0.34% · 관악 +0.33%<br>상승은 전부 외곽·중저가</div>
+      </div>
+      <div class="stat">
+        <div class="k">강남구 매매</div>
+        <div class="v down">−0.34%</div>
+        <div class="s">9주 연속 하락 (전주 −0.56%서 축소)<br>서초 −0.27% · 송파 −0.19% · 용산 −0.01%</div>
+      </div>
+      <div class="stat">
+        <div class="k">서울 전세 올해 누적</div>
+        <div class="v up">+8.35%</div>
+        <div class="s">매매 +8.31%를 <b>역전</b><br>전세 매물 1만9,569건(−18.8%, 아실 9/28)</div>
+      </div>
+      <div class="stat">
+        <div class="k">한국은행 기준금리</div>
+        <div class="v flat">3.00%</div>
+        <div class="s">2026-08-27 인상 후 유지 <b>(1차 출처 확인)</b><br>다음 금통위 10/22 · Jev 영향도 3.7/4</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-soft">
+  <div class="wrap reveal">
+    <span class="eyebrow">이번 주의 구조</span>
+    <h2 class="t">같은 발표문 안에 강세와 약세가 함께 있다</h2>
+    <p class="sub">한국부동산원 10월 5일 조사(10월 8일 발표) 서울 구별 아파트 매매가 변동률. 지수를 민 곳은 중저가 외곽이고, 강남3구·용산은 9주째 내리고 있다. <b>서울 평균 +0.12%로 개별 단지를 판단하면 틀린다.</b></p>
+
+    <div class="compare" style="margin-top:32px">
+      <div class="emphasis">
+        <span class="pill active">상승 주도 · 중저가 외곽</span>
+        <div style="margin-top:16px"><span class="srcnum" style="color:var(--orange)">+0.36%</span> <span style="color:var(--mute);font-size:0.9rem">서대문 (서울 25개구 최고)</span></div>
+        <div style="margin-top:14px">
+          <div class="srcrow"><span>강북</span><span>+0.35%</span></div>
+          <div class="srcrow"><span>금천</span><span>+0.34%</span></div>
+          <div class="srcrow"><span>관악</span><span>+0.33%</span></div>
+          <div class="srcrow"><span>도봉 · 노원 · 구로</span><span>+0.32 / +0.31 / +0.28%</span></div>
+          <div class="srcrow"><span><b>경기 (확대)</b></span><span><b>+0.18%</b></span></div>
+        </div>
+      </div>
+      <div class="muted">
+        <span class="pill neutral">하락 · 고가권 / 정체 · 지방</span>
+        <div style="margin-top:16px"><span class="srcnum" style="color:var(--blue)">−0.34%</span> <span style="color:var(--mute);font-size:0.9rem">강남 (9주 연속, 낙폭 축소)</span></div>
+        <div style="margin-top:14px">
+          <div class="srcrow"><span>서초 (9주 연속)</span><span>−0.27%</span></div>
+          <div class="srcrow"><span>송파 (5주째)</span><span>−0.19%</span></div>
+          <div class="srcrow"><span>용산 (2주 연속)</span><span>−0.01%</span></div>
+          <div class="srcrow"><span>서초 전세 (8주 연속)</span><span>−0.21%</span></div>
+          <div class="srcrow"><span><b>지방 (4주째 보합)</b></span><span><b>0.00%</b></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <b>이 상승의 원인은 수요가 아니라 매물 소멸이다</b> — 서울 아파트 전세 매물은 <b>1만9,569건</b>으로 1년 전보다 <b>18.8%</b> 줄어 2만건 선이 깨졌다(아실, 9/28 기준). 전월세 신규 매물 전체는 토지거래허가구역 확대 직전 4만4,055건 → 9월 3만7,686건(<b>−14.5%</b>)이고, 전세(−15.8%)가 월세(−12.9%)보다 더 빠지고 있다. 구 단위로 보면 동대문 1,132→323건(<b>−71.5%</b>)·구로 −63.8%·중랑 −63.5%·금천 −55.2% — <b>전세가 가장 많이 사라진 구가, 위 표에서 매매가 뛰는 구와 겹친다.</b> 8월 서울 전세 거래는 전년 대비 −32.2%이고 그중 갱신계약이 58.9%(전년 43.7%)다. 전세가 오르는 이유는 수요 증가가 아니라 <b>이동 불가</b>다.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <span class="eyebrow">두 기관 교차</span>
+    <h2 class="t">서울 지수는 올랐고, 서울 경매는 내렸다 — 모순이 아니다</h2>
+    <p class="sub">한국부동산원(10.05 조사, 10/8 발표)과 지지옥션(2026년 9월, 10/7 발표)이 같은 서울을 두고 반대 방향 숫자를 냈다. 기준일이 다르고, 무엇보다 <b>측정 대상의 가격대가 다르다.</b></p>
+
+    <div class="compare" style="margin-top:32px">
+      <div class="emphasis">
+        <span class="pill active">한국부동산원 · 주간 매매지수</span>
+        <div style="margin-top:16px"><span class="srcnum" style="color:var(--orange)">+0.12%</span> <span style="color:var(--mute);font-size:0.9rem">서울 매매 (87주 연속 상승)</span></div>
+        <div style="margin-top:14px">
+          <div class="srcrow"><span>상승 주도</span><span>서대문·강북·금천</span></div>
+          <div class="srcrow"><span>강남3구</span><span>9주 연속 하락</span></div>
+          <div class="srcrow"><span>기준일</span><span>2026-10-05 조사</span></div>
+        </div>
+      </div>
+      <div class="muted">
+        <span class="pill neutral">지지옥션 · 월간 경매 낙찰가율</span>
+        <div style="margin-top:16px"><span class="srcnum" style="color:var(--blue)">94.7%</span> <span style="color:var(--mute);font-size:0.9rem">서울 (1년 7개월 만 최저, −2.3%p)</span></div>
+        <div style="margin-top:14px">
+          <div class="srcrow"><span>강북 · 노원 · 구로 · 도봉</span><span>109.6 / 107.4 / 106.3 / 103.1%</span></div>
+          <div class="srcrow"><span>초고가·대형(트리마제·삼부)</span><span>감정가 70%대</span></div>
+          <div class="srcrow"><span>기준일</span><span>2026년 9월</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <b>해소</b> — 서울 경매 낙찰가율 하락은 가격 하락이 아니라 <b>고가물건 유입에 따른 평균 희석</b>이다(서울 진행 201건, 최근 1년 최다). 같은 서울에서 강북 109.6%·노원 107.4%는 감정가를 넘겨 낙찰됐고, 부동산원 쪽 상승 주도도 강북·금천·노원 등 중하위 가격대다. <b>양쪽 모두 ‘중저가 견조 · 고가 약세’로 같은 방향을 가리킨다.</b> 실전 함의도 하나로 모인다 — 15억 이하 중저가는 감정가 초과 낙찰로 <b>경매 메리트가 소멸</b>했고, 할인은 응찰자 적은 초고가·대형 유찰물에만 남았다.
+    </div>
+  </div>
+</section>
+
+<section class="on-dark">
+  <div class="wrap reveal">
+    <span class="eyebrow on-dark">선별 방법</span>
+    <h2 class="t">후보 21건 중 10건이 ‘기간 외’로 떨어졌다</h2>
+    <p class="sub">기사 판정은 TypeSafe Jev가, 컷오프는 코드가 맡는다. Jev는 기사당 다섯 문항만 답한다 — 카테고리, 시장 영향도(0~4), 가격 방향, 수치·기준일 명시 여부, 확정인가 전망인가. 지정 기간은 2일인데 <b style="color:var(--light)">둘째 날 10월 9일이 한글날이라 신규 발표가 0건</b>이어서 사실상 10월 8일 하루분이고, 그 하루가 부동산원 발표일이었다. 그래서 <b style="color:var(--light)">채택 8건 중 6건이 같은 발표의 파생 기사</b>다. 경매는 채택 0건, 금리·청약은 각 1건이어서 리더가 11건을 복원했다 — <b style="color:var(--light)">복원률이 높은 것은 판독이 후해진 게 아니라 후보 모수가 작다는 신호다.</b></p>
+
+    <div class="flow">
+      <div class="step"><div class="n">수집</div><div class="big">21</div><div class="d">WebSearch + 기사 원문 WebFetch. 1차 출처 2곳(부동산원 게시판·한국은행) fetch 성공</div></div>
+      <div class="step"><div class="n">Jev 판독</div><div class="big">8</div><div class="d">배치당 1회 호출, 3배치. 기간 외 10건·우선순위 미달 3건 제외</div></div>
+      <div class="step"><div class="n">리더 복원</div><div class="big">+11</div><div class="d">경매 0건·금리 1건·청약 1건. 섹션이 비어 기간 직전(10/1~10/7) 자료를 사람이 되살림</div></div>
+      <div class="step"><div class="n">품질 검사</div><div class="big">87.2</div><div class="d">완성 리포트를 4차원 루브릭으로 재평가. 통과선 75, 플래그 없음</div></div>
+    </div>
+
+    <div class="bar" aria-hidden="true">
+      <i style="width:38.1%;background:var(--orange)"></i>
+      <i style="width:52.4%;background:var(--green)"></i>
+      <i style="width:9.5%;background:rgba(250,249,245,0.25)"></i>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--orange)"></i>Jev 채택 8</span>
+      <span><i style="background:var(--green)"></i>리더 복원 11</span>
+      <span><i style="background:rgba(250,249,245,0.25)"></i>최종 미채택 2</span>
+    </div>
+
+    <p class="sub" style="margin-top:34px">이번 창 최고 영향도는 <b style="color:var(--light)">3.7 / 4</b>(한국은행 기준금리)인데, 그 내용은 <b style="color:var(--light)">“변한 게 없다”</b>는 것이다. 기간 내 정책 신규 2건은 장관동정·리츠 공고로 둘 다 1.4 / 4였다. 즉 이 창은 새 규칙이 생긴 주가 아니라 <b style="color:var(--light)">기존 규칙의 결과가 지표로 확인된 주</b>다. Jev 시장 톤은 상승 5 / 하락 0 / 중립 3으로 나왔는데, 하락 0은 시장이 일방 상승이라는 뜻이 아니라 <b style="color:var(--light)">하락 신호(강남3구 9주 하락, 서울 경매 1년 7개월 최저)가 전부 제외·복원 구간에 있었기 때문</b>이다.</p>
+
+    <div class="warn" style="background:rgba(217,119,87,0.12);color:var(--on-dark-mute);margin-top:30px">
+      <b style="color:var(--light)">직전 회차 교훈 2건을 이번에 적용했다</b> — ① <b style="color:var(--light)">금리 페이지 화살표</b>: 10/2 회차에서 한국은행 페이지 자동 파싱이 변동 방향을 ‘인하’로 오독했다. 이번에는 fetch 프롬프트에서 방향 해석을 배제하고 날짜·금리 수치만 받아 수준 추이(2.50→2.75→3.00)로 재구성했다. ② <b style="color:var(--light)">연도 트랩</b>: 경매 검색에서 “낙찰가율 97.3% 4년 만 최고”, “102.9% 3년 6개월 만 최고” 같은 과거 연도 기사가 상위에 혼입됐다. 채택 수치(전국 85.9%·서울 94.7%)는 2026-10-07자 복수 매체 원문에서 “2026년 9월” 명시를 확인한 것만 사용했다.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">채택 8건 + 복원 11건</span>
+        <h2 class="t">우선순위 순으로</h2>
+      </div>
+    </div>
+    <p class="sub">우선순위는 영향도에 출처 티어(T1 +5 / T3 −10)를 보정하고, 전망성과 수치 미명시를 감점해 계산한다. 막대는 그 점수다. <b style="color:var(--green)">초록 테두리</b>는 Jev가 걸렀으나 리더가 되살린 기사이며, 모두 복원 사유를 카드에 적었다.</p>
+
+    <div class="chip-group" style="margin-top:26px" role="tablist" id="chips">
+      <button class="chip active" data-f="all">전체 19</button>
+      <button class="chip" data-f="policy">정책·규제 4</button>
+      <button class="chip" data-f="market">시장 동향 4</button>
+      <button class="chip" data-f="rate">금리·거시 3</button>
+      <button class="chip" data-f="region">지역 3</button>
+      <button class="chip" data-f="supply">분양·청약 2</button>
+      <button class="chip" data-f="auction">경매 3</button>
+    </div>
+
+    <div class="newsgrid" id="grid">
+      <article class="card" data-c="rate">
+        <div class="top"><span class="impact">영향도 3.7 / 4 · 우선순위 96</span><span class="dir flat">― 중립</span></div>
+        <div class="name">한국은행 기준금리 <b>3.00%</b> 유지 — 다음 금통위 10월 22일</div>
+        <div class="why">공식 페이지 fetch로 변경 이력을 1차 확인했다(2.50% 2025-05-29 → 2.75% 2026-07-16 → <b>3.00% 2026-08-27</b>). 2026년 금통위는 연 8회이고 <b>9월 회의가 없어</b> 다음 결정은 10/22다. 이번 창 최고 영향도 항목의 내용이 “변화 없음”이라는 점이 이 주의 성격을 말해 준다. 조달금리는 고점 부근에서 고착이고, 9월 물가 2.9%로 동결 우위지만 고환율·가계부채가 인상 변수로 남는다.</div>
+        <div class="src"><span class="tag">한국은행(공식 페이지) · 8/27 결정</span><span class="note">1차 출처 확인</span></div>
+        <div class="meter"><i style="width:96%"></i></div>
+      </article>
+
+      <article class="card" data-c="policy" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">우선순위 72 · 후보 21건 중 2위</span><span class="dir flat">― 중립</span></div>
+        <div class="name">국토부, 건설현장 <b>불법하도급 집중단속·자진신고</b>(10.12~12.31) 운영</div>
+        <div class="why">판독 우선순위가 전체 2위인데 <b>날짜 하나로 탈락</b>해 복원했다. 단속 개시일이 10월 12일이라 지금 실행 가치가 가장 큰 항목이다. 신축·정비사업의 <b>공사비·공기 변수</b>로, 하도급 구조 조정에 따른 공정 지연·원가 상승이 따라온다. 분양·입주 임박 단지는 입주 지연 리스크를 다시 봐야 한다. 같은 주 ‘민간 공급 사업성 개선’ 기조와 반대로 작용할 수 있다. 단속 현장 수·과태료는 미표기.</div>
+        <div class="src"><span class="tag">국토교통부(보도자료 831) · 10/7</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:72%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="market" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 2.3 / 4 · 우선순위 58</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">서울 전세 매물 <b>1만9,569건</b> — 1년 전보다 18.8% 감소</div>
+        <div class="why">이번 창 핵심 현상(전세가 매매 역전, 외곽 생존 매수)의 <b>원인을 설명하는 유일한 자료</b>라 복원했다. 전월세 신규 매물 4만4,055→3만7,686건(−14.5%), 동대문 −71.5%·구로 −63.8%·중랑 −63.5%. 8월 전세 거래 −32.2%에 갱신계약 58.9%(전년 43.7%). 토허구역 실거주 의무 <b>유예 기한 2027-12-31로 1년 연장</b>(시행령 10/1 시행)에도 매물은 줄었다. 기준일에 따라 감소율이 15~18%대로 달라 <b>기준일 병기 필수</b>.</div>
+        <div class="src"><span class="tag">아실(이투데이) · 10/1 · 9/28 기준</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:58%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="market">
+        <div class="top"><span class="impact">영향도 2.0 / 4 · 우선순위 55</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">서울 아파트값 <b>87주 연속 상승</b> — 상승폭 6주 만에 재확대</div>
+        <div class="why">+0.09% → <b>+0.12%</b>로 0.03%p 확대. 8월 다섯째 주 +0.29%를 정점으로 5주 연속 줄던 상승폭이 6주 만에 꺾였고, 연속 상승은 87주로 종전 최장 85주(2020.6~2022.1)를 다시 넘었다. 지표는 확정이지만 <b>“둔화 추세가 끝났다”는 해석은 전망</b>이며 1주 반등으로 확정되지 않는다 — 다음 2~3주 지표가 필요하다. 보도자료 게시판에서 글번호 1946·등록일(10/8)을 직접 확인했다.</div>
+        <div class="src"><span class="tag">한국부동산원(보도자료 1946) · 10/8 발표 · 10.05 조사</span><span class="note">1차 출처 확인</span></div>
+        <div class="meter"><i style="width:55%"></i></div>
+      </article>
+
+      <article class="card" data-c="rate" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 2.3 / 4 · 우선순위 51</span><span class="dir flat">― 중립</span></div>
+        <div class="name">9월 소비자물가 <b>+2.9%</b>로 2%대 복귀</div>
+        <div class="why">10월 22일 금통위 판단의 <b>입력값</b>이라 복원했다. 지수 120.43, 전월비 +0.3%, 전년동월비 2.9%(8월 3.1%). 석유류 <b>+14.8%</b>·농산물 −4.0%·가공식품 +2.1%, 생활물가 +2.5%, 근원 2.8%. 4~6월 3%대였던 물가가 7월 2.8%·9월 2.9%로 2%대에 안착했다. 물가만 보면 동결 쪽이지만 석유류가 여전히 상방 요인이어서, <b>변동/고정 선택은 10/15 코픽스를 보고</b> 결정하는 것이 순서다.</div>
+        <div class="src"><span class="tag">국가데이터처(SBS Biz) · 10/2</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:51%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="supply" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 2.4 / 4 · 우선순위 51</span><span class="dir down">▼ 하락</span></div>
+        <div class="name">올해 청약 1순위 평균 <b>5.6대 1</b>로 반토막 — 공급 +34%, 접수 −26.6%</div>
+        <div class="why">기간 내 청약 자료가 <b>오피스텔 9세대 1건</b>이어서 섹션이 사실상 비어 복원했다. 전년 동기 10.2대 1의 절반이다. 일반공급 8만5,321가구(+34%)에 1순위 접수 47만5,009건(−26.6%). 민간 4.4:1·공공 19:1, <b>서울 63.1:1 대 제주·강원·부산·울산 1:1 미달</b>, 최고는 아크로서초 1,099.1:1. <b>물량이 늘고 접수가 줄었다 = 선별 청약 확정.</b> 지방 분양은 경쟁률이 아니라 미달·계약률을 봐야 한다.</div>
+        <div class="src"><span class="tag">직방(서울신문·연합뉴스) · 10/6 · 1/1~9/18 집계</span><span class="pill active">리더 복원</span><span class="note">집계 범위 병기 필요</span></div>
+        <div class="meter"><i style="width:51%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="region">
+        <div class="top"><span class="impact">영향도 1.9 / 4 · 우선순위 48</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">서울 상승 주도는 외곽 <b>‘생존 매수’</b> — 서대문 +0.36%·강북 +0.35%</div>
+        <div class="why">금천 +0.34%·관악 +0.33%·도봉 +0.32%·노원 +0.31%·구로 +0.28%. 전세도 성북·성동 각 +0.31%·노원 +0.30%로 외곽이 주도하고, 강남 전세는 −0.02%로 2주 만에 하락 전환했다. 우리은행 함영진 랩장은 <b>“전월세 물건이 없고 매매가는 높아”</b> 청년층이 생애최초 대출로 외곽을 사들인다고 분석했다. 수요가 9억·15억 대출 경계 아래로 내려온 구조 — 중하위 가격대 하방은 단단해졌지만 <b>동력이 생애최초 대출 한 줄에 걸려</b> 금리·DSR 변경에 가장 민감하다.</div>
+        <div class="src"><span class="tag">아시아경제(부동산원 10.05 조사) · 10/8</span></div>
+        <div class="meter"><i style="width:48%"></i></div>
+      </article>
+
+      <article class="card" data-c="auction" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 1.7 / 4 · 우선순위 48</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">울산 낙찰가율 <b>88.5%</b>(+4.1%p) 2개월 연속 전국 최대 상승 / 전남·광주 72.9% 올해 최저</div>
+        <div class="why">시장 지표에서 지방은 4주째 0.00% 보합인데 <b>경매에서는 지방 내부가 갈린다</b>는 걸 보여줘 복원했다. 전남·광주는 72.9%(−1.4%p)에 진행건수 −41.9%인데, 그 안에서도 목포 LH천년나무엔 응찰 23명이 몰렸다. <b>지방은 평균 낙찰가율로 판단하면 틀린다</b> — 같은 권역에서 한 건에 23명이 붙고 다른 건은 유찰을 반복한다. 단지 단위 수요·전세가율·입주물량으로 본다. 울산은 2개월 연속이므로 추세 확인 가치가 있다.</div>
+        <div class="src"><span class="tag">지지옥션(파이낸셜뉴스·시대일보) · 10/7 · 2026년 9월</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:48%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="rate" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 2.0 / 4 · 우선순위 44</span><span class="dir down">▼ 하락</span></div>
+        <div class="name">9월 가계대출 <b>올해 첫 감소</b> — 5대 은행 −1조2,852억, 주담대는 +1,253억</div>
+        <div class="why">기간 내 금리 자료가 기준금리 1건뿐이어서 <b>수요 측 자금 흐름이 통째로 비어</b> 복원했다. 5대 은행 잔액 780조8,340억원, 주담대 증가액은 8월(3조3,319억)의 <b>4%에도 못 미쳤다</b>. 8·13 대책으로 관리 목표가 1.5%→3.0%로 올라 여력이 늘었는데도 대출은 줄었다 — <b>차주가 금리 때문에 스스로 멈췄다</b>는 신호다. 외곽 매수가 생애최초 대출에 의존하는 만큼, 금리가 더 오르면 여기가 먼저 꺾인다. 금융위 확정 발표는 10월 중순.</div>
+        <div class="src"><span class="tag">파이낸셜뉴스·서울경제TV(언론 집계) · 10/4</span><span class="pill active">리더 복원</span><span class="note">확정치 아님</span></div>
+        <div class="meter"><i style="width:44%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="market">
+        <div class="top"><span class="impact">영향도 2.0 / 4 · 우선순위 40</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">서울 올해 누적 전세 <b>+8.35%</b>가 매매 +8.31%를 역전</div>
+        <div class="why">서울 전세 +0.16%로 2주 연속 같은 상승폭, 수도권 +0.15%·전국 +0.09%·지방 +0.03%. 전세가율 상승·갭 축소가 숫자로 확인된다. 다만 전세 상승의 원인이 수요 호조가 아니라 <b>매물 소멸</b>이라는 점에서 임차인 부담·역전세 리스크도 같이 커진다. Jev가 T3로 분류해 <b>1차 출처 확인 필요</b> 플래그가 붙었고, 부동산원 보도자료 본문을 열지 못해 누적 수치는 언론 인용본 기준이다.</div>
+        <div class="src"><span class="tag">세계일보(부동산원 10.05 조사) · 10/8</span><span class="note">1차 출처 확인 필요</span></div>
+        <div class="meter"><i style="width:40%"></i></div>
+      </article>
+
+      <article class="card" data-c="region">
+        <div class="top"><span class="impact">영향도 2.0 / 4 · 우선순위 40</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">경기 <b>+0.18%</b>로 확대 · 인천 +0.02% · 지방 4주째 <b>0.00%</b></div>
+        <div class="why">경기가 +0.15%→+0.18%로 확대되며 수도권 전체 +0.14%. 서울 외곽 → 경기로 이어지는 수요 하향 이동이 지표로 나타나고 있다. 반면 <b>지방은 4주 연속 보합으로 수도권 온기가 넘어가지 않는다</b>(전세 +0.03%). 지방 보합이 바닥인지 정체인지는 확인되지 않았다. 경기는 교통 개선·입주 공백 지역 선별, 지방은 신축·역세권만 유효한 구간이다. T3 출처로 1차 출처 확인 필요 플래그.</div>
+        <div class="src"><span class="tag">세계일보(부동산원 10.05 조사) · 10/8</span><span class="note">1차 출처 확인 필요</span></div>
+        <div class="meter"><i style="width:40%"></i></div>
+      </article>
+
+      <article class="card" data-c="auction" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 2.0 / 4 · 우선순위 40</span><span class="dir down">▼ 하락</span></div>
+        <div class="name">9월 전국 낙찰가율 <b>85.9%</b> 4개월 만 반등, 서울은 <b>94.7%</b> 1년 7개월 최저</div>
+        <div class="why">경매 섹션이 <b>채택 0건</b>이어서 복원했다. 전국 85.9%(+1.2%p)·진행 3,405건(−6%)·낙찰률 35.4%·응찰 5.3→5.8명. 서울은 97.0%→94.7%(−2.3%p)로 2025년 2월(91.8%) 이후 최저인데, 성수 트리마제·여의도 삼부 등 <b>초고가·대형의 감정가 70%대 낙찰이 평균을 희석</b>한 결과다(서울 진행 201건, 1년 최다). “전국 반등 vs 서울 하락”을 수요 방향으로 읽으면 틀린다. 할인은 <b>서울 25억↑ 유찰물</b>에만 남았고 현금·보유세·환금성 리스크가 동반된다.</div>
+        <div class="src"><span class="tag">지지옥션(뉴스핌·세계일보 등 4매체) · 10/7 · 2026년 9월</span><span class="pill active">리더 복원</span><span class="note">연도 원문 검증</span></div>
+        <div class="meter"><i style="width:40%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="policy">
+        <div class="top"><span class="impact">영향도 1.4 / 4 · 우선순위 39</span><span class="dir flat">― 중립</span></div>
+        <div class="name">국토부 <b>리츠 인가·설립 공고 5건</b>이 10월 8일 하루에 집중 게시</div>
+        <div class="why">프로젝트리츠 설립신고 수리(가치투자넥스트·팸코호텔제11호), 변경인가(엠프라퍼티제1호·코람코가치투자숭례), 영업인가(코람코가치투자양지). 기관 자금의 부동산 간접투자 경로가 돌아간다는 <b>동향 지표로만</b> 쓴다. 금액·규모가 공고에 미표기여서 자금 유입 규모는 알 수 없다. 이 항목이 정책 섹션 1위가 된 것은 <b>T1 출처 가점 때문이고 시장 영향 때문이 아니다.</b></div>
+        <div class="src"><span class="tag">국토교통부 공지(1512·1511·1510·1507·1506) · 10/8</span></div>
+        <div class="meter"><i style="width:39%"></i></div>
+      </article>
+
+      <article class="card" data-c="policy" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 1.6 / 4 · 우선순위 39</span><span class="dir flat">― 중립</span></div>
+        <div class="name">홍지선 장관, 국감서 <b>“연내 수도권 신규택지 7.3만호+α”</b>·공공택지 착공 16만가구 확충</div>
+        <div class="why">기간 내 정책 신규 2건이 동정·공고로 영향도 1.4에 머물러 <b>공급 정책 축이 비어</b> 복원했다. 장관은 최근 3년 공급 부족을 인정하고 연말까지 가격 안정·상승률 둔화를 전망했다. 전세 비중 감소는 ‘메가트렌드’로 진단하면서 전세 소멸 유도 지적에는 선을 그었다. <b>전부 예고·전망이다</b> — 입지·시기 미확정이고, 지표는 오히려 상승폭 재확대로 나왔다. 추적할 것은 숫자가 아니라 <b>발표 시점</b>이다.</div>
+        <div class="src"><span class="tag">아주경제·딜사이트(국토위 국정감사) · 10/7</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:39%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="auction" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">영향도 1.8 / 4 · 우선순위 37</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">서울 경매 극단적 양극화 — <b>강북 109.6%·노원 107.4%</b> 감정가 초과</div>
+        <div class="why">평균값만으로는 입찰 판단이 불가능해 복원했다. 구로 106.3%·도봉 103.1%도 감정가를 넘겼고, 반대편 성수 트리마제·여의도 삼부 등 초고가·대형은 감정가 70%대다. 15억 이하로 수요가 몰린 결과다. 결론은 분명하다 — <b>15억 이하 중저가 대단지는 감정가 초과 낙찰이라 경매로 사는 메리트가 없다</b>(입찰 자제 구간). 할인은 고가·대형 유찰물에만 남았고, 그 구간은 권리관계 깨끗한 물건 선별이 수익의 전부다.</div>
+        <div class="src"><span class="tag">지지옥션(세계일보·파이낸셜뉴스) · 10/7 · 2026년 9월</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:37%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="market" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">우선순위 34 · 컷오프 35에 1점 미달</span><span class="dir down">▼ 하락</span></div>
+        <div class="name">강남3구·용산 <b>9주 연속 하락</b>, 그러나 낙폭은 축소</div>
+        <div class="why"><b>기간 내 유일한 하락 축 기사</b>다. 이게 빠지면 Jev 시장 톤 “상승 5 / 하락 0”이 리포트에 그대로 전이돼 양극화가 사라진다. 강남 −0.34%(전주 −0.56%)·서초 −0.27%(−0.33%)로 8월 둘째 주 이후 9주 연속 하락이지만 낙폭은 줄었다. 송파 −0.19%·용산 −0.01%. 8·3 세제개편 이후 매도 압력이 9주째인데 크게 낮춘 재건축 급매물이 일부 소진됐다. 추세 반전이 아니라 ‘완만해진 하락’ — 다만 <b>강남3구는 지금 유일하게 가격이 깎이는 구간</b>이다.</div>
+        <div class="src"><span class="tag">세계일보(부동산원 10.05 조사) · 10/8</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:34%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="policy">
+        <div class="top"><span class="impact">영향도 1.4 / 4 · 우선순위 30</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">국토부, 공공에 이어 <b>민간 주택공급 현장까지</b> 장관 직접 점검</div>
+        <div class="why">인허가 패스트트랙·통합심의, 공사비 급등·PF 부담으로 멈춘 재건축·재개발의 사업성 제고를 공급 전략으로 내세운 흐름의 현장 행보다. 연내 수도권 공공주택 6.2만호 착공 목표, LH 개혁 로드맵 연내 발표가 함께 예고돼 있다. <b>현장 점검 일정까지가 사실</b>이고(Jev 전망성 67%) 지원 수단·금액·대상 구역은 미발표다. 국토부 게시판 fetch가 불가해 <b>글번호·날짜는 자체 일일 수집 기록을 인용</b>했고 본문 전문은 확인하지 못했다.</div>
+        <div class="src"><span class="tag">국토교통부(보도자료 833, 장관동정) · 10/8</span><span class="note">본문 미확인</span></div>
+        <div class="meter"><i style="width:30%"></i></div>
+      </article>
+
+      <article class="card" data-c="region" style="border-color:rgba(120,140,93,0.5)">
+        <div class="top"><span class="impact">우선순위 28 · 컷오프 미달 + 기간 외</span><span class="dir up">▲ 상승</span></div>
+        <div class="name">광진 자양4동 A구역 <b>2,999가구 조합설립인가</b>(동의율 80.56%)</div>
+        <div class="why">기간 내 지역 자료가 주간 가격지표 재인용 2건뿐이어서 <b>정비사업 축이 비어</b> 복원했다. 자양4동 A구역은 2025년 7월 정비구역 지정 후 조합설립인가(지하3~지상49층, 19개 동). 광진 중곡1동 A구역은 정비구역 지정안 <b>수정가결</b>(최고 35층 2,200가구), 중랑 상봉13구역은 9/14 조합설립인가(최고 37층 1,249가구). <b>단계를 뭉개서 ‘추진 중’으로 묶지 말 것</b> — 중곡1동은 지정·고시 전이고, 상계한신3차·중계주공4(71.59%)·상계주공7(66.6%)은 그보다 앞 단계다. 뒤에 사업시행인가·공사비 협상이 남고, 10/12 하도급 단속이 바로 이 단계에 꽂힌다.</div>
+        <div class="src"><span class="tag">파이낸셜뉴스 · 10/1</span><span class="pill active">리더 복원</span></div>
+        <div class="meter"><i style="width:28%;background:var(--green)"></i></div>
+      </article>
+
+      <article class="card" data-c="supply">
+        <div class="top"><span class="impact">영향도 0.8 / 4 · 우선순위 24</span><span class="dir flat">― 중립</span></div>
+        <div class="name">잠실 에떼르넬 비욘드 오피스텔 <b>9세대</b> 접수 마감 — 경쟁률 미공개</div>
+        <div class="why">롯데타워 인근 신축 오피스텔(전용 28.43~39.94㎡, 5.88억~9.38억)이 10/7~8 접수를 마감했고 경쟁률은 청약홈 집계 대기다. 9세대 한 건으로 시장을 읽을 수는 없다 — <b>이 항목의 의미는 “기간 내 청약 데이터가 이것뿐”이라는 사실 자체</b>다. 기간 내 아파트 1순위 경쟁률 확정 공시는 0건이고, 다음 일정은 10/12~14(천안·진도)와 10/19~21 지방·충청권 9개 단지로 <b>수도권 신규 분양은 공백</b>이다. Jev 영향도 0.8, 섹션 정원 규칙으로 살아남았다.</div>
+        <div class="src"><span class="tag">청약홈 · 10/8</span><span class="note">섹션 정원</span></div>
+        <div class="meter"><i style="width:24%"></i></div>
+      </article>
+    </div>
+
+    <p class="sub" style="margin-top:28px">복원하지 않은 2건은 <b>국토위 국감 산하기관 감사</b>(우선순위 18 — 복원한 10/7 국감 답변과 내용 중복)와 <b>오세훈 시장 취임 100일 SNS 분석</b>(우선순위 7 — 정치 논평, 시장 수치 없음)이다. 기간 내(10/8~10/9) <b>경매·NPL·제도·판례는 신규 0건</b>이고 금리·청약은 각 1건이었다. <b>복원 11건은 배경 해석용이며 ‘이번 주 변화’로 읽어선 안 된다.</b></p>
+  </div>
+</section>
+
+<section class="bg-soft">
+  <div class="wrap reveal">
+    <span class="eyebrow">다음 주</span>
+    <h2 class="t">무엇을 확인할 것인가</h2>
+    <p class="sub">이번 주 해석 — ‘상승폭은 다시 벌어졌지만 그 동력이 전세난에 밀린 외곽 매수이고, 자금은 이미 줄기 시작했다’ — 는 아직 검증되지 않았다. 아래 항목들이 그 검증 지점이고, <b>다음 주에 네 개가 몰려 있다.</b></p>
+    <div class="watch">
+      <div class="wrow first">
+        <div class="wdate">10월 12일 월</div>
+        <div>
+          <div class="wtitle">국토부 불법하도급 집중단속 개시 (~12/31)</div>
+          <div class="wwhy">판독 우선순위 2위 항목의 <b>실제 시행일</b>이다. 신축·정비사업 공사비·공기 리스크로, 분양·입주가 임박한 단지부터 영향을 받는다. 같은 주 ‘민간 공급 사업성 개선’ 기조와 반대로 작용하는지 본다.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">10월 15일 목 15시</div>
+        <div>
+          <div class="wtitle">9월분 코픽스 공시</div>
+          <div class="wwhy">8월 신규취급 3.18%에서 두 달 보합이었다. 서울 외곽 상승이 <b>생애최초 대출 한 줄</b>에 걸려 있어, 변동금리 재산정이 이번 창 상승 동력의 가장 직접적인 변수다. 변동/고정 선택은 이 수치를 보고 정한다.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">10월 15일 목</div>
+        <div>
+          <div class="wtitle">한국부동산원 주간동향 (10.12 조사)</div>
+          <div class="wwhy">상승폭 재확대가 <b>1주 반등인지 추세 전환인지</b> 1차 판정된다. 강남3구 하락이 10주째 이어지는지, 지방 보합이 5주째인지도 같이 확인한다.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">10월 19일 일</div>
+        <div>
+          <div class="wtitle">국토위 서울시 주택공급 국정감사</div>
+          <div class="wwhy">공급·전월세·<b>토지거래허가제</b> 발언이 매수심리에 직접 영향을 준다. 전세 매물 −18.8%의 원인으로 토허제가 지목되는 상황이라, 제도 손질 언급 여부가 임대차 시장의 분기점이다.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">10월 19~21일</div>
+        <div>
+          <div class="wtitle">지방·충청권 9개 단지 청약 (청주·부산 연제·거제·인천 부평·아산 등)</div>
+          <div class="wwhy">서울 63.1:1 대 제주·강원·부산·울산 1:1 미달이라는 격차가 다시 확인되는 자리다. 볼 것은 경쟁률 수치가 아니라 <b>1순위 미달 여부</b>다.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">10월 22일 목</div>
+        <div>
+          <div class="wtitle">한국은행 금융통화위원회 통화정책방향 결정</div>
+          <div class="wwhy">3.00%에서 동결인지 추가 인상인지. 9월 물가 2.9%와 가계대출 첫 감소는 동결 쪽이고, 고환율·수도권 집값은 인상 쪽이다. <b>4분기 매수심리의 분기점</b>이며, 외곽 매수 동력이 여기서 결정된다.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">10월 중순</div>
+        <div>
+          <div class="wtitle">금융위 「9월중 가계대출 동향(잠정)」 확정 발표</div>
+          <div class="wwhy">이 리포트의 5대 은행 −1조2,852억원은 <b>언론 집계치</b>다. 전 금융권 감소폭(−1.5~2조 추산)이 확정되면 ‘올해 첫 감소’가 사실로 굳는다. 확정치로 교체해야 하는 항목.</div>
+        </div>
+      </div>
+      <div class="wrow">
+        <div class="wdate">연내 (시기 미정)</div>
+        <div>
+          <div class="wtitle">수도권 신규택지 7.3만호+α 입지 발표 · LH 개혁 로드맵</div>
+          <div class="wwhy">추적할 것은 물량이 아니라 <b>발표 시점</b>이다. 입지 공개는 해당 지역 지분·주변 시세에 즉각 반응하는 이벤트이고, 연말로 밀리면 2027년 입주 공백 서사가 한 번 더 강화된다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>선별 방법</b> — 후보 21건을 TypeSafe Jev(System One)로 판독하고, 출처 티어·기간·중복·우선순위는 코드에서 계산했다. 완성 리포트는 doc-eval <code>news</code> 루브릭으로 재평가해 종합 87.2, 플래그 없음(출처·사실 규율 3.29 / 구조·가독성 3.64 / 커버리지·기간 규율 3.31 / 투자 시사점 3.78).<br>
+    <b>이번 회차의 한계</b> — 판독 기간이 2일인데 <b>둘째 날 10월 9일이 한글날이라 신규 발표가 0건</b>이어서 사실상 1일분이다. 그 하루가 부동산원 발표일이라 채택 8건 중 6건이 같은 발표의 파생 기사다. 경매는 채택 0건, 금리·청약은 각 1건이어서 기간 직전(10/1~10/7) 자료 11건을 복원하고 본문·카드에 모두 표시했다. <b>연휴·공휴일이 낀 주는 <code>--from</code>을 한 주 앞으로 늘려야 한다</b>는 교훈이 9/25·10/2에 이어 세 번째로 재확인됐다.<br>
+    <b>1차 출처 fetch</b> — ✅ 한국부동산원 보도자료 게시판(글번호 1946 「주간아파트가격동향(20261005기준)」, 10/8 등록) 제목·등록일 확인, 단 본문 상세는 열리지 않아 개별 수치는 세계일보·아시아경제 원문 fetch로 교차 확인. ✅ 한국은행 기준금리 페이지(3.00%, 2026-08-27). ❌ 국토교통부 보도자료 게시판 — 이번에도 접근 불가, 글번호·날짜는 자체 일일 수집 기록 인용. ❌ 정책브리핑(korea.kr) — 10/8 목록에 국토부 항목 없음.<br>
+    <b>Jev의 한계</b> — 본문에 적힌 것만 판단한다. “출처가 명시됐는가”는 보지만 “그 출처가 사실인가”는 보지 않는다. 선별 근거일 뿐 사실 검증이 아니다. 이번 회차에서 과거 연도 경매 기사 혼입을 걸러낸 것은 Jev가 아니라 리더의 원문 발행일 확인이다.<br>
+    <b>원본</b> — <code>auction_news/reports/weekly/2026-10-09-weekly-news.md</code> · 판독 원자료 <code>news-2026-10-09/jev_news.md</code><br>
+    <span style="display:inline-block;margin-top:12px">공개 정보 기반. 투자 결정 전 원문 확인을 권장한다.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var prog = document.getElementById('prog');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }, {passive:true});
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  var chips = document.getElementById('chips');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#grid .card'));
+  chips.addEventListener('click', function(e){
+    var btn = e.target.closest('.chip'); if(!btn) return;
+    chips.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+    btn.classList.add('active');
+    var f = btn.dataset.f;
+    cards.forEach(function(card){ card.hidden = !(f === 'all' || card.dataset.c === f); });
+  });
+})();
+</script>
+
+</body>
+</html>
