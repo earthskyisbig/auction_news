@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-import json, re
+# 사용: python3 build_celeb_map.py [갱신일 YYYY-MM-DD] [출력 html 경로]
+import json, re, sys
+UPDATED = sys.argv[1] if len(sys.argv) > 1 else '2026-09-19'
+OUT = sys.argv[2] if len(sys.argv) > 2 else '/Users/leomyung/auction_news/reports/celeb-realestate-map.html'
 R = json.load(open('geo.json'))
 GU = json.load(open('seoul_gu.json'))
 # 구 폴리곤 단순화: 좌표 소수 4자리
@@ -34,7 +37,7 @@ n_list = sum(1 for r in R if r['t']=='매물')
 n_2526 = sum(1 for r in R if (r['evyear'] or 0) >= 2025)
 
 html = r'''<title>연예인 부동산 지도</title>
-<meta name="description" content="연예인 매입·매도·경매·매물 90건을 서울 지도에 표시하고 지역별 선행 신호를 정리">
+<meta name="description" content="연예인 매입·매도·경매·매물 __N__건을 서울 지도에 표시하고 지역별 선행 신호를 정리">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -57,8 +60,8 @@ html = r'''<title>연예인 부동산 지도</title>
   --river:rgba(106,155,204,0.35); --gu-fill:#232320; --gu-line:#3a3a35; --gu-text:rgba(243,241,234,0.45); --light-gray:#232320; --dark:#f3f1ea;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6}
-h1,h2,h3{margin:0;font-family:var(--heading);font-weight:600;letter-spacing:-0.01em;text-wrap:balance}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+h1,h2,h3{margin:0;font-family:var(--heading);font-weight:600;letter-spacing:-0.01em;text-wrap:balance;word-break:keep-all}
 a{color:var(--orange)}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px}
 section{padding-block:44px}
@@ -134,7 +137,7 @@ section.bg-soft{background:var(--soft)}
 .list .row i{width:8px;height:8px;border-radius:50%;display:block}
 .list .row .n{font-family:var(--heading);font-weight:600;font-size:.86rem}
 .list .row .p{color:var(--mute);font-size:.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.list .row .y{font-family:var(--label);font-size:.72rem;color:var(--mute);font-variant-numeric:tabular-nums;text-align:right}
+.list .row .y{font-family:var(--label);font-size:.72rem;color:var(--mute);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .list .row .y b{display:block;color:var(--ink);font-size:.82rem}
 .listhead{padding:10px 14px;font-family:var(--label);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel)}
 
@@ -182,7 +185,7 @@ tr:hover td{background:var(--soft)}
   <div class="blob" style="width:420px;height:420px;background:var(--orange);top:-160px;right:-80px;animation:driftA 18s ease-in-out infinite"></div>
   <div class="blob" style="width:320px;height:320px;background:var(--blue);bottom:-140px;left:10%;animation:driftB 16s ease-in-out infinite"></div>
   <div class="wrap" style="position:relative">
-    <span class="eyebrow">보도 기준 · 2026-09-19 갱신</span>
+    <span class="eyebrow">보도 기준 · __UPDATED__ 갱신</span>
     <h1>연예인은 어디를 샀고, 어디서 팔았나</h1>
     <p class="lead">최근 보도된 연예인 부동산 매입·매도·경매·매물 __N__건을 서울 지도에 올렸습니다. 그들이 "언제, 어느 동네에" 들어갔는지를 시간순으로 보면 성수→한남→청담·논현으로 자금이 옮겨간 궤적이 드러납니다.</p>
     <div class="stats">
@@ -255,20 +258,24 @@ tr:hover td{background:var(--soft)}
         <ul class="tl">
           <li><span>2011~13</span><b>이승철 49억, 싸이 78억, 태진아 43억(현 350억 매물)</b></li>
           <li><span>2018~21</span><b>김태희 한남더힐 42억, 제니 50억</b></li>
+          <li><span>2023~24</span><b>장윤정 나인원한남 120억 매도 → 서빙고 아페르한강 120억 현금</b></li>
           <li><span>2025</span><b>장원영 137억, BTS 진 175억, 김혜수 80억 — 전액 현금. 김태희 127억 매도</b></li>
+          <li><span>2026-04</span><b>BTS 진 한남더힐 1채 127억 매도(차익 82억, 양도세 중과 직전)</b></li>
           <li><span>2026-09</span><b>변우석 130억 현금 매입 / 차가원 라누보한남 경매</b></li>
         </ul>
-        <div class="verdict"><strong>판정: 주거는 현재진행형 최고점.</strong> 젊은 톱스타의 무대출 매입이 집중. 빌딩은 공실(싸이)·매물(태진아) 등 회수 신호 혼재.</div>
+        <div class="verdict"><strong>판정: 주거는 현재진행형 최고점, 일부 회수 시작.</strong> 젊은 톱스타의 무대출 매입이 집중되는 한편 장기 보유자(김태희·BTS 진)는 세제 변경 직전 차익 실현. 빌딩은 공실(싸이)·매물(태진아) 등 회수 신호 혼재.</div>
       </div>
       <div class="card">
         <h3>청담·삼성·논현 <small>2026 신규 매입 집중</small></h3>
         <div class="bar"><i style="width:70%"></i></div>
         <ul class="tl">
           <li><span>2013~17</span><b>현빈 청담 48억(현 197억), 대성 청담 310억(현 900억)</b></li>
-          <li><span>2023~24</span><b>유재석 논현 285억 현금, 나연 브라이튼N40 39억</b></li>
+          <li><span>2023~24</span><b>유재석 논현 285억 현금, 나연·허웅 브라이튼N40 39억</b></li>
+          <li><span>2025-09</span><b>스타쉽 청담 첫 자가 사옥 590억</b></li>
           <li><span>2026</span><b>나연 청담 코너 95억, 신세경 라브르27, 이장우 신사 94억, 김종국 논현 62억, 마크 논현</b></li>
+          <li><span>2026-10</span><b>스타쉽 청담 2차 220억 / 서현진 청담 전셋집 경매 25.6억 낙찰(3회 유찰)</b></li>
         </ul>
-        <div class="verdict"><strong>판정: 신규 자금의 현재 목적지.</strong> 하이엔드 주거(브라이튼N40·라브르27) + 노후 코너 건물 신축형 매입이 동시에 늘고 있음.</div>
+        <div class="verdict"><strong>판정: 신규 자금의 현재 목적지.</strong> 하이엔드 주거(브라이튼N40·라브르27) + 노후 코너 건물 신축형 매입 + 기획사 사옥(스타쉽 810억)이 겹침. 단, 청담 빌라는 3회 유찰 뒤 낙찰될 만큼 고가 다세대 수요는 얇음.</div>
       </div>
       <div class="card">
         <h3>신사·가로수길·도산 <small>손바뀜·조정</small></h3>
@@ -298,8 +305,9 @@ tr:hover td{background:var(--soft)}
           <li><span>2019</span><b>기안84 석촌역 46억 → 62억</b></li>
           <li><span>2020~26</span><b>송은이 상암 사옥 87→157억, 코쿤 서교동 31억, 정용화 상수 153억</b></li>
           <li><span>2024</span><b>서동주 창동 재개발 예정지 구옥 12억 경매 낙찰</b></li>
+          <li><span>2026-10</span><b>JYP 성내동 사옥 인접 2필지 960억(고덕 신사옥 철회)</b></li>
         </ul>
-        <div class="verdict"><strong>판정: 성수 인접(자양)·홍대권 상권 확장선.</strong> 재개발 예정지 구옥 경매 낙찰 같은 소액 선점 사례가 늘고 있음.</div>
+        <div class="verdict"><strong>판정: 성수 인접(자양)·홍대권 상권 확장선.</strong> 재개발 예정지 구옥 경매 낙찰 같은 소액 선점 사례가 늘고 있음. 기획사는 신축 대신 현 사옥 주변 기존 건물 매입(JYP 성내동)으로 선회.</div>
       </div>
     </div>
     <div class="callout"><strong>주의.</strong> 이 데이터는 언론 보도·유튜브 추정치를 모은 것으로 등기부·실거래가로 재검증하지 않았습니다. 시세는 보도 시점의 업계 추정이며, 매입가에는 취득세·신축비가 빠져 있습니다. 선행지표로 쓸 때는 "연예인이 언제 어느 동네에 처음 들어갔는가"라는 시점·지역 정보에 무게를 두고 금액은 참고만 하십시오.</div>
@@ -450,9 +458,10 @@ vb={...HOME}; applyVB(); refresh();
 '''
 html = (html.replace('__DATA__', DATA).replace('__GU__', GUJ).replace('__HAN__', HANJ)
         .replace('__NBUY__', str(n_buy)).replace('__NSELL__', str(n_sell)).replace('__NAUC__', str(n_auc))
-        .replace('__NLIST__', str(n_list)).replace('__N2526__', str(n_2526)).replace('__N__', str(n_total)))
+        .replace('__NLIST__', str(n_list)).replace('__N2526__', str(n_2526)).replace('__N__', str(n_total)).replace('__UPDATED__', UPDATED))
 open('celeb-map.html','w').write(html)
 # 로컬 열람용 완전판(head 포함)
 full = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' + html.split('</title>',1)[0]+'</title>' + html.split('</title>',1)[1].split('</style>',1)[0]+'</style></head><body>' + html.split('</style>',1)[1] + '</body></html>'
-open('/Users/leomyung/auction_news/reports/celeb-realestate-map.html','w').write(full)
+open(OUT,'w').write(full)
+print('출력', OUT)
 print(len(html)//1024,'KB', n_total, n_geo, n_buy, n_sell, n_auc, n_list, n_2526)
